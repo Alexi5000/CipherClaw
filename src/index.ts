@@ -1,7 +1,9 @@
 /**
- * CipherClaw — The World's First OpenClaw Bug Hunter AI Agent
+ * CipherClaw — OpenClaw Bug Hunter AI Agent
  *
- * Debug platform with:
+ * A modular debug toolkit for multi-agent systems.
+ * Each capability lives in its own file — import only what you need.
+ *
  *  1. Causal Debug Graph (CDG)
  *  2. Cognitive Fingerprinting
  *  3. Hierarchical Debug Propagation
@@ -21,15 +23,33 @@
  * @see https://github.com/Alexi5000/CipherClaw
  */
 
-// Core Engine
-export { CipherClawEngine, ERROR_PATTERNS, PREDICTION_PATTERNS, createBuiltInFlowTests } from './core/engine.js';
-export { uid, mean, stddev, clamp, entropy } from './core/engine.js';
+// ── Core Engine (thin orchestrator) ─────────────────────────────────────────
+export { CipherClawEngine } from './core/engine.js';
 
-// OpenClaw Adapter
+// ── Individual Modules (for tree-shaking / selective import) ────────────────
+export { uid, mean, stddev, clamp, entropy } from './core/utils.js';
+export { ERROR_PATTERNS, PREDICTION_PATTERNS } from './core/patterns.js';
+export { createBuiltInFlowTests } from './core/flow-tests.js';
+export { updateCausalGraph, getCausalGraph, getCausalRootCauses } from './core/causal-graph.js';
+export { updateCognitiveFingerprint, getCognitiveFingerprint, detectCognitiveDrift } from './core/cognitive-profiler.js';
+export { propagateDebugEvent, getUnacknowledgedEvents, acknowledgeEvent } from './core/hierarchy-propagation.js';
+export { analyzeMemoryHealth } from './core/memory-debugger.js';
+export { predictFailures, resolvePrediction, getActivePredictions, getPredictionAccuracy } from './core/predictive-engine.js';
+export { checkSoulIntegrity } from './core/soul-monitor.js';
+export { detectCrossDomainCorrelations, getCorrelationsForDomain } from './core/cross-domain.js';
+export { selfDebug, logSelfDebug, getSelfDebugLog } from './core/self-debug.js';
+export { detectAnomalies, getCascades } from './core/anomaly-detector.js';
+export { classifyError } from './core/error-classifier.js';
+export { addBreakpoint, removeBreakpoint, toggleBreakpoint, checkBreakpoints } from './core/breakpoints.js';
+export { captureSnapshot, captureManualSnapshot, getSnapshots, replayToSnapshot } from './core/snapshots.js';
+export { synthesizeFlowTest, runFlowTests } from './core/flow-runner.js';
+export { generateVeronicaReport } from './core/report-generator.js';
+
+// ── OpenClaw Adapter ────────────────────────────────────────────────────────
 export { CipherClawAdapter, createCipherClaw } from './openclaw/adapter.js';
 export type { EventHandler } from './openclaw/adapter.js';
 
-// OpenClaw Manifest
+// ── OpenClaw Manifest ───────────────────────────────────────────────────────
 export {
   CIPHERCLAW_MANIFEST,
   CIPHERCLAW_AGENTS,
@@ -38,40 +58,24 @@ export {
   CIPHERCLAW_EVENTS,
 } from './openclaw/manifest.js';
 
-// Types
+// ── Types ───────────────────────────────────────────────────────────────────
 export type {
-  // Enums & Primitives
   DebugDomain, Severity, Recoverability, ErrorModule, SessionStatus,
   BreakpointType, AnomalyType, MemoryTier,
-  // Trace & Span
   Span, SpanEvent, Trace,
-  // Causal Debug Graph
   CausalNode, CausalGraph, CausalEdge,
-  // Cognitive Fingerprinting
   CognitiveMetrics, CognitiveFingerprint,
-  // Hierarchy
   HierarchyDebugEvent,
-  // Memory
   MemoryHealthReport, MemoryTierHealth, MemoryIssue,
-  // Predictions
   FailurePrediction, FailurePattern, PatternIndicator,
-  // Soul Integrity
   SoulIntegrityReport, SoulDimension, SoulDriftEvent,
-  // Cross-Domain
   CrossDomainCorrelation,
-  // Flow Tests
   FlowTest, FlowTestStep, FlowAssertion,
-  // Anomalies
   Anomaly, AnomalyCascade,
-  // Breakpoints & Snapshots
   Breakpoint, StateSnapshot,
-  // Errors
   ClassifiedError,
-  // Session & Report
   DebugSession, VeronicaDebugReport,
-  // OpenClaw
   OpenClawAgentDef, OpenClawEvent,
-  // Config
   CipherClawConfig,
 } from './types/index.js';
 

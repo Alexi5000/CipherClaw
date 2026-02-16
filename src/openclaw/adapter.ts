@@ -172,7 +172,7 @@ export class CipherClawAdapter {
   // CAUSAL ANALYSIS
   // ─────────────────────────────────────────────────────────
 
-  getCausalGraph(sessionId?: string): CausalGraph | undefined {
+  getCausalGraph(sessionId?: string): CausalGraph | null {
     return this.engine.getCausalGraph(sessionId ?? this.activeSessionId ?? '');
   }
 
@@ -351,7 +351,7 @@ export class CipherClawAdapter {
   // REPORTS
   // ─────────────────────────────────────────────────────────
 
-  generateReport(sessionId?: string): VeronicaDebugReport {
+  generateReport(sessionId?: string): VeronicaDebugReport | null {
     const id = sessionId ?? this.activeSessionId;
     if (!id) throw new Error('No active session');
     return this.engine.generateVeronicaReport(id);
