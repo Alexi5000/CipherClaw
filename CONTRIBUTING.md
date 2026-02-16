@@ -1,61 +1,52 @@
 # Contributing to CipherClaw
 
-Thank you for your interest in contributing to CipherClaw — the world's first OpenClaw Bug Hunter AI Agent!
+Thanks for considering a contribution. CipherClaw is an open-source project and we welcome help from the community.
 
-## Code of Conduct
+## Getting Started
 
-By participating in this project, you agree to maintain a respectful and inclusive environment for everyone.
+```bash
+git clone https://github.com/Alexi5000/CipherClaw.git
+cd CipherClaw
+pnpm install
+pnpm test
+```
 
-## How to Contribute
+All 154 tests should pass. If they don't, open an issue.
 
-### Reporting Bugs
+## What We're Looking For
 
-1. Check [existing issues](https://github.com/Alexi5000/CipherClaw/issues) to avoid duplicates.
-2. Create a new issue with:
-   - Clear title describing the bug
-   - Steps to reproduce
-   - Expected vs. actual behavior
-   - Environment details (Node version, OS, etc.)
+**Bug fixes** — If you find something broken, fix it and send a PR. Include a test that would have caught it.
 
-### Suggesting Features
+**New capabilities** — CipherClaw has 10 core debugging approaches. If you have an idea for an 11th, open a discussion first so we can talk about the design.
 
-1. Open a [feature request issue](https://github.com/Alexi5000/CipherClaw/issues/new).
-2. Describe the feature and its use case.
-3. Explain how it fits within the CipherClaw architecture.
+**Better tests** — More edge cases, more domains, more agent configurations. The test suite runs against the real engine with no mocks, and we want to keep it that way.
 
-### Submitting Code
+**Documentation** — If something is unclear, fix the docs. Clear writing is as valuable as clear code.
 
-1. Fork the repository.
-2. Create a feature branch: `git checkout -b feature/my-feature`
-3. Make your changes following the coding standards below.
-4. Write tests for new functionality.
-5. Ensure all tests pass: `pnpm test`
-6. Ensure type checking passes: `pnpm typecheck`
-7. Commit with a descriptive message: `git commit -m "feat: add new capability"`
-8. Push and create a Pull Request.
+**OpenClaw integration** — Better event bus patterns, more skill manifest options, adapter improvements for different OpenClaw configurations.
 
-## Coding Standards
+## How to Submit
 
-- **Language:** TypeScript (strict mode)
-- **Style:** Follow existing code patterns in `src/core/engine.ts`
-- **Naming:** Use camelCase for variables/functions, PascalCase for types/classes, UPPER_SNAKE_CASE for constants
-- **Comments:** Use JSDoc for all public exports
-- **Tests:** Write tests for all new functionality
+1. Fork the repo
+2. Create a branch (`git checkout -b fix/your-fix` or `feat/your-feature`)
+3. Make your changes
+4. Run `pnpm test` — all 154 tests must pass
+5. Run `pnpm typecheck` — zero errors in strict mode
+6. Commit with a descriptive message
+7. Push and open a PR
 
-## Commit Message Convention
+## Code Style
 
-We follow [Conventional Commits](https://www.conventionalcommits.org/):
+CipherClaw is written in TypeScript with strict mode enabled. A few guidelines:
 
-- `feat:` — New feature
-- `fix:` — Bug fix
-- `docs:` — Documentation changes
-- `test:` — Adding or updating tests
-- `refactor:` — Code refactoring
-- `perf:` — Performance improvements
+- Zero `any` types in the public API. Internal use is acceptable when genuinely needed.
+- Every public method should have a JSDoc comment.
+- New capabilities need tests. Not "a test" — tests that cover the happy path, edge cases, and error conditions.
+- No runtime dependencies. CipherClaw is zero-dependency by design.
 
-## Architecture Guidelines
+## Architecture
 
-CipherClaw follows the OpenClaw architecture. When adding new capabilities:
+When adding new capabilities:
 
 1. **Types** go in `src/types/index.ts`
 2. **Engine logic** goes in `src/core/engine.ts`
@@ -63,14 +54,35 @@ CipherClaw follows the OpenClaw architecture. When adding new capabilities:
 4. **Adapter methods** are added to `src/openclaw/adapter.ts`
 5. **Exports** are added to `src/index.ts`
 
-## Patent Considerations
+This follows the OpenClaw skill architecture. Keep things modular.
 
-CipherClaw contains patent-pending technology. If your contribution introduces a novel capability, please note this in your PR description so we can evaluate it for inclusion in the patent portfolio.
+## Tests
+
+The test suite has three layers:
+
+| Suite | Purpose |
+|-------|---------|
+| `unit-core-capabilities.test.ts` | Tests each of the 10 core capabilities independently |
+| `e2e-session-lifecycle.test.ts` | Tests full debug session flows across domains |
+| `smoke-api.test.ts` | Tests every public API method and event |
+
+Run them with `pnpm test`. They use Vitest and run against the real engine — no mocks, no stubs.
+
+## Commit Messages
+
+Use descriptive messages:
+
+```
+fix: handle empty span arrays in causal graph construction
+feat: add memory capacity overflow detection to tier debugging
+test: add edge case for single-span anomaly detection
+docs: clarify soul integrity scoring algorithm
+```
 
 ## License
 
-By contributing, you agree that your contributions will be licensed under the Apache License 2.0.
+By contributing, you agree that your contributions will be licensed under the [Apache License 2.0](LICENSE).
 
----
+## Questions?
 
-Thank you for helping make CipherClaw the best debug agent in the world!
+Open an issue or start a discussion. We're happy to help.

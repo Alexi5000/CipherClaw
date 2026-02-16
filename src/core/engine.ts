@@ -2,7 +2,7 @@
  * CipherClaw Core Engine
  * The World's First OpenClaw Bug Hunter AI Agent
  *
- * This engine implements 10 patent-pending novel capabilities:
+ * This engine implements 10 core capabilities:
  *  1. Causal Debug Graph (CDG)
  *  2. Cognitive Fingerprinting
  *  3. Hierarchical Debug Propagation
@@ -449,7 +449,7 @@ export class CipherClawEngine {
   }
 
   // ─────────────────────────────────────────────────────────
-  // PATENT CLAIM 1: CAUSAL DEBUG GRAPH
+  // CAPABILITY 1: CAUSAL DEBUG GRAPH
   // ─────────────────────────────────────────────────────────
 
   private _updateCausalGraph(session: DebugSession, trace: Trace): void {
@@ -649,7 +649,7 @@ export class CipherClawEngine {
   }
 
   // ─────────────────────────────────────────────────────────
-  // PATENT CLAIM 2: COGNITIVE FINGERPRINTING
+  // CAPABILITY 2: COGNITIVE FINGERPRINTING
   // ─────────────────────────────────────────────────────────
 
   computeCognitiveFingerprint(sessionId: string, agentId: string): CognitiveFingerprint {
@@ -811,7 +811,7 @@ export class CipherClawEngine {
   }
 
   // ─────────────────────────────────────────────────────────
-  // PATENT CLAIM 3: HIERARCHICAL DEBUG PROPAGATION
+  // CAPABILITY 3: HIERARCHICAL DEBUG PROPAGATION
   // ─────────────────────────────────────────────────────────
 
   propagateDebugEvent(
@@ -843,7 +843,7 @@ export class CipherClawEngine {
   }
 
   // ─────────────────────────────────────────────────────────
-  // PATENT CLAIM 4: MEMORY TIER DEBUGGING
+  // CAPABILITY 4: MEMORY TIER DEBUGGING
   // ─────────────────────────────────────────────────────────
 
   analyzeMemoryHealth(
@@ -943,7 +943,7 @@ export class CipherClawEngine {
   }
 
   // ─────────────────────────────────────────────────────────
-  // PATENT CLAIM 5: PREDICTIVE FAILURE ENGINE
+  // CAPABILITY 5: PREDICTIVE FAILURE ENGINE
   // ─────────────────────────────────────────────────────────
 
   private _runPredictions(session: DebugSession, trace: Trace): void {
@@ -1065,7 +1065,7 @@ export class CipherClawEngine {
   }
 
   // ─────────────────────────────────────────────────────────
-  // PATENT CLAIM 6: SOUL INTEGRITY MONITOR
+  // CAPABILITY 6: SOUL INTEGRITY MONITOR
   // ─────────────────────────────────────────────────────────
 
   analyzeSoulIntegrity(
@@ -1185,7 +1185,7 @@ export class CipherClawEngine {
   }
 
   // ─────────────────────────────────────────────────────────
-  // PATENT CLAIM 7: CROSS-DOMAIN CORRELATION
+  // CAPABILITY 7: CROSS-DOMAIN CORRELATION
   // ─────────────────────────────────────────────────────────
 
   detectCrossDomainCorrelations(sessionId: string): CrossDomainCorrelation[] {
@@ -1246,7 +1246,7 @@ export class CipherClawEngine {
   }
 
   // ─────────────────────────────────────────────────────────
-  // PATENT CLAIM 8: SELF-DEBUGGING AGENT LOOP
+  // CAPABILITY 8: SELF-DEBUGGING AGENT LOOP
   // ─────────────────────────────────────────────────────────
 
   selfDebug(): { healthy: boolean; issues: string[]; actions: string[] } {
@@ -1302,7 +1302,7 @@ export class CipherClawEngine {
   }
 
   // ─────────────────────────────────────────────────────────
-  // PATENT CLAIM 9: FLOW TEST SYNTHESIS
+  // CAPABILITY 9: FLOW TEST SYNTHESIS
   // ─────────────────────────────────────────────────────────
 
   synthesizeFlowTest(sessionId: string, traceId: string): FlowTest | null {
@@ -1398,7 +1398,7 @@ export class CipherClawEngine {
   }
 
   // ─────────────────────────────────────────────────────────
-  // PATENT CLAIM 10: TEMPORAL ANOMALY CASCADE DETECTION
+  // CAPABILITY 10: TEMPORAL ANOMALY CASCADE DETECTION
   // ─────────────────────────────────────────────────────────
 
   detectAnomalies(

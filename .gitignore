@@ -1,2 +1,3 @@
 node_modules/\ndist/\n.env\ncoverage/\n*.log
 node_modules/
+dist/

@@ -1,16 +1,27 @@
 {
-  "name": "@cipherclaw/core",
+  "name": "cipherclaw",
   "version": "1.0.0",
-  "description": "CipherClaw — The World's First OpenClaw Bug Hunter AI Agent. Patent-pending autonomous debug platform for multi-agent systems.",
+  "description": "An OpenClaw debug agent that traces causes, profiles behavior, and predicts failures in multi-agent systems.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "skills",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "lint": "eslint src/",
     "typecheck": "tsc --noEmit"
   },
   "keywords": [
@@ -20,13 +31,11 @@
     "multi-agent",
     "observability",
     "tracing",
-    "breakpoints",
     "causal-inference",
     "cognitive-fingerprinting",
-    "bug-hunter",
     "cipherclaw"
   ],
-  "author": "ClawLI.AI / CipherClaw Team",
+  "author": "ClawLI.AI",
   "license": "Apache-2.0",
   "homepage": "https://cipherclaw.com",
   "repository": {
@@ -42,13 +51,5 @@
   "devDependencies": {
     "typescript": "^5.4.0",
     "vitest": "^3.0.0"
-  },
-  "peerDependencies": {
-    "react": ">=18.0.0",
-    "react-dom": ">=18.0.0"
-  },
-  "peerDependenciesMeta": {
-    "react": { "optional": true },
-    "react-dom": { "optional": true }
   }
 }

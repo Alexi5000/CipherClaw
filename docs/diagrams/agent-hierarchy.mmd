@@ -1,34 +1,57 @@
+%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#7c3aed', 'primaryTextColor': '#e0e0e0', 'primaryBorderColor': '#00ff41', 'lineColor': '#00ff41'}}}%%
+
 graph TB
-    subgraph "CipherClaw Agent Hierarchy"
-        V["🧠 Veronica<br/>Sovereign AI<br/>Tier: Sovereign"]
+    subgraph HIERARCHY["CipherClaw Agent Hierarchy"]
+        direction TB
 
-        subgraph "Orchestrators (Tier 2)"
-            R["🌹 Rose<br/>Shaman"]
-            P["👻 Phantom<br/>Debug Orchestrator"]
+        V["👑 Veronica · Sovereign AI<br/>━━━━━━━━━━━━━━━━━━━━<br/>Tier: Sovereign · Controls All Agents<br/>Delegates to Rose & Phantom"]
+
+        subgraph TIER2["Orchestrators · Tier 2"]
+            R["🌹 Rose · Shaman Orchestrator<br/>━━━━━━━━━━━━━━━━━━━━<br/>CRM · Content · Social Media<br/>Lead Pipeline · Outreach"]
+            PH["👻 Phantom · Debug Orchestrator<br/>━━━━━━━━━━━━━━━━━━━━<br/>Debug All Agents & Systems<br/>10 Core Debug Capabilities"]
         end
 
-        subgraph "CipherClaw Specialists (Tier 3)"
-            TA["🔍 Trace Analyst<br/>Trace Analysis<br/>Causal Graphs<br/>Anomaly Detection"]
-            EC["⚡ Error Classifier<br/>Error Classification<br/>Root Cause Analysis<br/>Fix Suggestions"]
-            CP["🧬 Cognitive Profiler<br/>Fingerprinting<br/>Soul Integrity<br/>Memory Health"]
+        V -->|"commands"| R
+        V -->|"commands"| PH
+
+        subgraph TIER3["CipherClaw Specialists · Tier 3"]
+            TA["🔍 Trace Analyst<br/>━━━━━━━━━━━━━━━━━━━━<br/>Trace Ingestion & Indexing<br/>Causal Graph Construction<br/>Anomaly Detection<br/>Cascade Identification"]
+            EC["⚡ Error Classifier<br/>━━━━━━━━━━━━━━━━━━━━<br/>Error Pattern Matching<br/>Severity Assessment<br/>Root Cause Analysis<br/>Fix Suggestion Generation"]
+            CP["🧠 Cognitive Profiler<br/>━━━━━━━━━━━━━━━━━━━━<br/>Cognitive Fingerprinting<br/>Soul Integrity Monitoring<br/>Memory Health Analysis<br/>Behavioral Drift Detection"]
         end
 
-        subgraph "CipherClaw Workers (Tier 4)"
-            FT["🧪 Flow Tester<br/>Test Synthesis<br/>Test Execution<br/>Coverage Analysis"]
+        PH -->|"delegates"| TA
+        PH -->|"delegates"| EC
+        PH -->|"delegates"| CP
+
+        subgraph TIER4["CipherClaw Workers · Tier 4"]
+            FT["🧪 Flow Tester<br/>━━━━━━━━━━━━━━━━━━━━<br/>Flow Test Synthesis<br/>Test Execution<br/>Coverage Analysis<br/>Regression Detection"]
         end
 
-        V --> R
-        V --> P
-        P --> TA
-        P --> EC
-        P --> CP
-        P --> FT
+        PH -->|"delegates"| FT
+
+        subgraph DOMAINS["Debug Coverage"]
+            direction LR
+            DA["🤖 Agent<br/>Command"]
+            DC["📊 CRM<br/>Pipeline"]
+            DS["📝 Content<br/>& Social"]
+            DM["🧠 Memory<br/>System"]
+        end
+
+        TA -->|"monitors"| DA
+        TA -->|"monitors"| DC
+        EC -->|"monitors"| DS
+        CP -->|"monitors"| DM
     end
 
-    style V fill:#ff6b6b,stroke:#333,color:#fff
-    style R fill:#e74c3c,stroke:#333,color:#fff
-    style P fill:#9b59b6,stroke:#333,color:#fff
-    style TA fill:#3498db,stroke:#333,color:#fff
-    style EC fill:#e67e22,stroke:#333,color:#fff
-    style CP fill:#2ecc71,stroke:#333,color:#fff
-    style FT fill:#1abc9c,stroke:#333,color:#fff
+    style V fill:#dc2626,stroke:#ff4444,stroke-width:3px,color:#fff
+    style R fill:#b91c1c,stroke:#ef4444,stroke-width:2px,color:#fff
+    style PH fill:#7c3aed,stroke:#00ff41,stroke-width:3px,color:#fff
+    style TA fill:#2563eb,stroke:#60a5fa,stroke-width:2px,color:#fff
+    style EC fill:#ea580c,stroke:#fb923c,stroke-width:2px,color:#fff
+    style CP fill:#059669,stroke:#34d399,stroke-width:2px,color:#fff
+    style FT fill:#0891b2,stroke:#22d3ee,stroke-width:2px,color:#fff
+    style DA fill:#0f172a,stroke:#00ff41,stroke-width:1px,color:#86efac
+    style DC fill:#0f172a,stroke:#00ff41,stroke-width:1px,color:#86efac
+    style DS fill:#0f172a,stroke:#00ff41,stroke-width:1px,color:#86efac
+    style DM fill:#0f172a,stroke:#00ff41,stroke-width:1px,color:#86efac

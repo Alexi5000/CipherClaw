@@ -1,7 +1,7 @@
 /**
  * CipherClaw — The World's First OpenClaw Bug Hunter AI Agent
  *
- * Patent-pending debug platform with:
+ * Debug platform with:
  *  1. Causal Debug Graph (CDG)
  *  2. Cognitive Fingerprinting
  *  3. Hierarchical Debug Propagation

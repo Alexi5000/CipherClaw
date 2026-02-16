@@ -393,7 +393,7 @@ export const CIPHERCLAW_EVENTS: OpenClawEventDef[] = [
 export const CIPHERCLAW_MANIFEST: OpenClawSkillManifest = {
   name: 'cipherclaw',
   version: '1.0.0',
-  description: 'CipherClaw — The World\'s First OpenClaw Bug Hunter AI Agent. Patent-pending debug platform with causal analysis, cognitive fingerprinting, predictive failure detection, soul integrity monitoring, and cross-domain correlation.',
+  description: 'CipherClaw — The World\'s First OpenClaw Bug Hunter AI Agent. Debug platform with causal analysis, cognitive fingerprinting, predictive failure detection, soul integrity monitoring, and cross-domain correlation.',
   author: 'ClawLI.AI',
   license: 'Apache-2.0',
   homepage: 'https://cipherclaw.com',

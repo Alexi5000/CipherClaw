@@ -1,6 +1,6 @@
 /**
- * CipherClaw — Unit Tests for All 10 Patent Claims
- * Patent Verification Grade: Every claim is tested independently.
+ * CipherClaw — Unit Tests for All 10 Core Capabilities
+ * Every capability is tested independently.
  *
  * Test Matrix:
  *  Claim 1: Causal Debug Graph (CDG)
@@ -178,10 +178,10 @@ describe('Session Management', () => {
 });
 
 // ═══════════════════════════════════════════════════════════════
-// PATENT CLAIM 1: CAUSAL DEBUG GRAPH
+// CAPABILITY 1: CAUSAL DEBUG GRAPH
 // ═══════════════════════════════════════════════════════════════
 
-describe('Patent Claim 1: Causal Debug Graph (CDG)', () => {
+describe('Capability 1: Causal Debug Graph (CDG)', () => {
   let engine: CipherClawEngine;
   let sessionId: string;
 
@@ -257,10 +257,10 @@ describe('Patent Claim 1: Causal Debug Graph (CDG)', () => {
 });
 
 // ═══════════════════════════════════════════════════════════════
-// PATENT CLAIM 2: COGNITIVE FINGERPRINTING
+// CAPABILITY 2: COGNITIVE FINGERPRINTING
 // ═══════════════════════════════════════════════════════════════
 
-describe('Patent Claim 2: Cognitive Fingerprinting', () => {
+describe('Capability 2: Cognitive Fingerprinting', () => {
   let engine: CipherClawEngine;
   let sessionId: string;
 
@@ -332,10 +332,10 @@ describe('Patent Claim 2: Cognitive Fingerprinting', () => {
 });
 
 // ═══════════════════════════════════════════════════════════════
-// PATENT CLAIM 3: HIERARCHICAL DEBUG PROPAGATION
+// CAPABILITY 3: HIERARCHICAL DEBUG PROPAGATION
 // ═══════════════════════════════════════════════════════════════
 
-describe('Patent Claim 3: Hierarchical Debug Propagation', () => {
+describe('Capability 3: Hierarchical Debug Propagation', () => {
   let engine: CipherClawEngine;
   let sessionId: string;
 
@@ -397,10 +397,10 @@ describe('Patent Claim 3: Hierarchical Debug Propagation', () => {
 });
 
 // ═══════════════════════════════════════════════════════════════
-// PATENT CLAIM 4: MEMORY TIER DEBUGGING
+// CAPABILITY 4: MEMORY TIER DEBUGGING
 // ═══════════════════════════════════════════════════════════════
 
-describe('Patent Claim 4: Memory Tier Debugging', () => {
+describe('Capability 4: Memory Tier Debugging', () => {
   let engine: CipherClawEngine;
   let sessionId: string;
 
@@ -462,10 +462,10 @@ describe('Patent Claim 4: Memory Tier Debugging', () => {
 });
 
 // ═══════════════════════════════════════════════════════════════
-// PATENT CLAIM 5: PREDICTIVE FAILURE ENGINE
+// CAPABILITY 5: PREDICTIVE FAILURE ENGINE
 // ═══════════════════════════════════════════════════════════════
 
-describe('Patent Claim 5: Predictive Failure Engine', () => {
+describe('Capability 5: Predictive Failure Engine', () => {
   let engine: CipherClawEngine;
   let sessionId: string;
 
@@ -511,10 +511,10 @@ describe('Patent Claim 5: Predictive Failure Engine', () => {
 });
 
 // ═══════════════════════════════════════════════════════════════
-// PATENT CLAIM 6: SOUL INTEGRITY MONITOR
+// CAPABILITY 6: SOUL INTEGRITY MONITOR
 // ═══════════════════════════════════════════════════════════════
 
-describe('Patent Claim 6: Soul Integrity Monitor', () => {
+describe('Capability 6: Soul Integrity Monitor', () => {
   let engine: CipherClawEngine;
   let sessionId: string;
 
@@ -598,10 +598,10 @@ describe('Patent Claim 6: Soul Integrity Monitor', () => {
 });
 
 // ═══════════════════════════════════════════════════════════════
-// PATENT CLAIM 7: CROSS-DOMAIN CORRELATION
+// CAPABILITY 7: CROSS-DOMAIN CORRELATION
 // ═══════════════════════════════════════════════════════════════
 
-describe('Patent Claim 7: Cross-Domain Correlation', () => {
+describe('Capability 7: Cross-Domain Correlation', () => {
   let engine: CipherClawEngine;
   let sessionId: string;
 
@@ -631,10 +631,10 @@ describe('Patent Claim 7: Cross-Domain Correlation', () => {
 });
 
 // ═══════════════════════════════════════════════════════════════
-// PATENT CLAIM 8: SELF-DEBUGGING AGENT LOOP
+// CAPABILITY 8: SELF-DEBUGGING AGENT LOOP
 // ═══════════════════════════════════════════════════════════════
 
-describe('Patent Claim 8: Self-Debugging Agent Loop', () => {
+describe('Capability 8: Self-Debugging Agent Loop', () => {
   let engine: CipherClawEngine;
   let sessionId: string;
 
@@ -673,10 +673,10 @@ describe('Patent Claim 8: Self-Debugging Agent Loop', () => {
 });
 
 // ═══════════════════════════════════════════════════════════════
-// PATENT CLAIM 9: FLOW TEST SYNTHESIS
+// CAPABILITY 9: FLOW TEST SYNTHESIS
 // ═══════════════════════════════════════════════════════════════
 
-describe('Patent Claim 9: Flow Test Synthesis', () => {
+describe('Capability 9: Flow Test Synthesis', () => {
   let engine: CipherClawEngine;
   let sessionId: string;
 
@@ -728,10 +728,10 @@ describe('Patent Claim 9: Flow Test Synthesis', () => {
 });
 
 // ═══════════════════════════════════════════════════════════════
-// PATENT CLAIM 10: TEMPORAL ANOMALY CASCADE DETECTION
+// CAPABILITY 10: TEMPORAL ANOMALY CASCADE DETECTION
 // ═══════════════════════════════════════════════════════════════
 
-describe('Patent Claim 10: Temporal Anomaly Cascade Detection', () => {
+describe('Capability 10: Temporal Anomaly Cascade Detection', () => {
   let engine: CipherClawEngine;
   let sessionId: string;
 

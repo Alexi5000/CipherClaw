@@ -1,80 +1,105 @@
+%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#7c3aed', 'primaryTextColor': '#e0e0e0', 'primaryBorderColor': '#00ff41', 'lineColor': '#00ff41', 'secondaryColor': '#1a1a2e', 'tertiaryColor': '#0d0d1a'}}}%%
+
 graph TB
-    subgraph "ClawLI.AI Platform"
-        V["🧠 Veronica<br/>Sovereign AI"]
-        R["🌹 Rose<br/>Shaman Orchestrator"]
-        P["👻 Phantom<br/>Debug Orchestrator"]
+    subgraph PLATFORM["🏛️ ClawLI.AI Platform"]
+        direction TB
+        V["👑 Veronica<br/>Sovereign AI"]
+
+        subgraph ORCH["Orchestrators · Tier 2"]
+            R["🌹 Rose<br/>Shaman Orchestrator"]
+            P["👻 Phantom<br/>Debug Orchestrator"]
+        end
+
         V --> R
         V --> P
-    end
 
-    subgraph "CipherClaw Debug Engine"
-        direction TB
-        TA["🔍 Trace Analyst"]
-        EC["⚡ Error Classifier"]
-        CP["🧬 Cognitive Profiler"]
-        FT["🧪 Flow Tester"]
+        subgraph ENGINE["⚡ CipherClaw Debug Engine"]
+            direction TB
+            TA["🔍 Trace Analyst<br/>Specialist"]
+            EC["⚡ Error Classifier<br/>Specialist"]
+            CP["🧠 Cognitive Profiler<br/>Specialist"]
+            FT["🧪 Flow Tester<br/>Worker"]
+        end
+
         P --> TA
         P --> EC
         P --> CP
         P --> FT
+
+        subgraph CLAIMS["🏆 10 Core Capabilities"]
+            direction LR
+            C1["1️⃣ Causal<br/>Debug Graph"]
+            C2["2️⃣ Cognitive<br/>Fingerprinting"]
+            C3["3️⃣ Hierarchy<br/>Propagation"]
+            C4["4️⃣ Memory Tier<br/>Debugging"]
+            C5["5️⃣ Predictive<br/>Failure"]
+            C6["6️⃣ Soul<br/>Integrity"]
+            C7["7️⃣ Cross-Domain<br/>Correlation"]
+            C8["8️⃣ Self-Debugging<br/>Loop"]
+            C9["9️⃣ Flow Test<br/>Synthesis"]
+            C10["🔟 Anomaly<br/>Cascades"]
+        end
+
+        TA --> C1
+        TA --> C10
+        EC --> C5
+        EC --> C7
+        CP --> C2
+        CP --> C6
+        CP --> C4
+        FT --> C9
+        P --> C3
+        P --> C8
+
+        subgraph DOMAINS["🌐 Debug Domains"]
+            direction LR
+            D1["🤖 Agent<br/>Command Center"]
+            D2["📊 CRM<br/>Pipeline"]
+            D3["📝 Content &<br/>Social Media"]
+            D4["🧠 Memory<br/>System"]
+        end
+
+        C1 --> D1
+        C1 --> D2
+        C1 --> D3
+        C1 --> D4
+
+        subgraph OUTPUT["📤 Output"]
+            direction LR
+            O1["📋 Veronica<br/>Report"]
+            O2["🔮 Failure<br/>Predictions"]
+            O3["🔴 Breakpoints<br/>& Snapshots"]
+            O4["📊 Flow Test<br/>Reports"]
+        end
+
+        CLAIMS --> O1
+        CLAIMS --> O2
+        CLAIMS --> O3
+        CLAIMS --> O4
     end
 
-    subgraph "10 Patent Claims"
-        direction TB
-        C1["1. Causal Debug Graph"]
-        C2["2. Cognitive Fingerprinting"]
-        C3["3. Hierarchy Propagation"]
-        C4["4. Memory Tier Debug"]
-        C5["5. Predictive Failure"]
-        C6["6. Soul Integrity"]
-        C7["7. Cross-Domain Correlation"]
-        C8["8. Self-Debugging Loop"]
-        C9["9. Flow Test Synthesis"]
-        C10["10. Anomaly Cascades"]
-    end
-
-    TA --> C1
-    TA --> C10
-    EC --> C5
-    EC --> C7
-    CP --> C2
-    CP --> C6
-    CP --> C4
-    FT --> C9
-    P --> C3
-    P --> C8
-
-    subgraph "Debug Domains"
-        D1["🤖 Agent<br/>Command Center"]
-        D2["📊 CRM<br/>Pipeline"]
-        D3["📝 Content<br/>Social Media"]
-        D4["💾 Memory<br/>System"]
-    end
-
-    C1 --> D1
-    C1 --> D2
-    C1 --> D3
-    C7 --> D1
-    C7 --> D2
-    C7 --> D3
-    C4 --> D4
-
-    subgraph "Output"
-        REP["📋 Veronica Report"]
-        BP["🔴 Breakpoints"]
-        SS["📸 Snapshots"]
-        PRED["🔮 Predictions"]
-    end
-
-    C1 --> REP
-    C5 --> PRED
-    C8 --> BP
-    C8 --> SS
-
-    style V fill:#ff6b6b,stroke:#333,color:#fff
-    style P fill:#9b59b6,stroke:#333,color:#fff
-    style R fill:#e74c3c,stroke:#333,color:#fff
-    style TA fill:#3498db,stroke:#333,color:#fff
-    style EC fill:#e67e22,stroke:#333,color:#fff
-    style CP fill:#2ecc71,stroke:#333,color:#fff
-    style FT fill:#1abc9c,stroke:#333,color:#fff
+    style V fill:#dc2626,stroke:#ff4444,stroke-width:3px,color:#fff
+    style R fill:#b91c1c,stroke:#ef4444,stroke-width:2px,color:#fff
+    style P fill:#7c3aed,stroke:#00ff41,stroke-width:3px,color:#fff
+    style TA fill:#2563eb,stroke:#60a5fa,stroke-width:2px,color:#fff
+    style EC fill:#ea580c,stroke:#fb923c,stroke-width:2px,color:#fff
+    style CP fill:#059669,stroke:#34d399,stroke-width:2px,color:#fff
+    style FT fill:#0891b2,stroke:#22d3ee,stroke-width:2px,color:#fff
+    style C1 fill:#1e1b4b,stroke:#7c3aed,stroke-width:1px,color:#c4b5fd
+    style C2 fill:#1e1b4b,stroke:#7c3aed,stroke-width:1px,color:#c4b5fd
+    style C3 fill:#1e1b4b,stroke:#7c3aed,stroke-width:1px,color:#c4b5fd
+    style C4 fill:#1e1b4b,stroke:#7c3aed,stroke-width:1px,color:#c4b5fd
+    style C5 fill:#1e1b4b,stroke:#7c3aed,stroke-width:1px,color:#c4b5fd
+    style C6 fill:#1e1b4b,stroke:#7c3aed,stroke-width:1px,color:#c4b5fd
+    style C7 fill:#1e1b4b,stroke:#7c3aed,stroke-width:1px,color:#c4b5fd
+    style C8 fill:#1e1b4b,stroke:#7c3aed,stroke-width:1px,color:#c4b5fd
+    style C9 fill:#1e1b4b,stroke:#7c3aed,stroke-width:1px,color:#c4b5fd
+    style C10 fill:#1e1b4b,stroke:#7c3aed,stroke-width:1px,color:#c4b5fd
+    style D1 fill:#0f172a,stroke:#00ff41,stroke-width:1px,color:#86efac
+    style D2 fill:#0f172a,stroke:#00ff41,stroke-width:1px,color:#86efac
+    style D3 fill:#0f172a,stroke:#00ff41,stroke-width:1px,color:#86efac
+    style D4 fill:#0f172a,stroke:#00ff41,stroke-width:1px,color:#86efac
+    style O1 fill:#1a1a2e,stroke:#a78bfa,stroke-width:1px,color:#c4b5fd
+    style O2 fill:#1a1a2e,stroke:#a78bfa,stroke-width:1px,color:#c4b5fd
+    style O3 fill:#1a1a2e,stroke:#a78bfa,stroke-width:1px,color:#c4b5fd
+    style O4 fill:#1a1a2e,stroke:#a78bfa,stroke-width:1px,color:#c4b5fd

@@ -1,58 +1,63 @@
+%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#7c3aed', 'actorBkg': '#7c3aed', 'actorBorder': '#00ff41', 'actorTextColor': '#fff', 'signalColor': '#00ff41', 'signalTextColor': '#e0e0e0', 'noteBkgColor': '#1e1b4b', 'noteTextColor': '#c4b5fd', 'noteBorderColor': '#7c3aed', 'activationBkgColor': '#2d1b69', 'activationBorderColor': '#00ff41'}}}%%
+
 sequenceDiagram
-    participant U as User/Veronica
-    participant P as Phantom (Orchestrator)
-    participant TA as Trace Analyst
-    participant EC as Error Classifier
-    participant CP as Cognitive Profiler
-    participant FT as Flow Tester
-    participant DB as Supabase
+    participant U as 🧑‍💻 User / Veronica
+    participant P as 👻 Phantom
+    participant TA as 🔍 Trace Analyst
+    participant EC as ⚡ Error Classifier
+    participant CP as 🧠 Cognitive Profiler
+    participant FT as 🧪 Flow Tester
 
-    U->>P: Start Debug Session
-    P->>DB: Create Session Record
-    P-->>U: Session ID
+    Note over U,FT: Phase 1 — Session Initialization
+    U->>P: startSession({ domain: 'agent' })
+    P-->>U: DebugSession { id, status: 'active' }
 
-    Note over P: Hunting Mode Active
+    Note over U,FT: Phase 2 — Trace Ingestion & Analysis
+    U->>P: ingestTrace(trace)
+    P->>TA: analyzeSpans(spans)
+    TA->>TA: Build Causal Graph
+    TA->>TA: Detect Anomalies
+    TA->>TA: Detect Cascades
 
-    loop Trace Ingestion
-        U->>P: Ingest Trace/Span
-        P->>TA: Analyze Trace
-        TA->>TA: Build Causal Graph
-        TA->>TA: Detect Anomalies
-        TA->>TA: Detect Cascades
-
-        alt Error Detected
-            TA->>EC: Classify Error
-            EC->>EC: Pattern Match
-            EC->>EC: Root Cause Analysis
-            EC-->>P: ClassifiedError
-        end
-
-        alt Breakpoint Hit
-            P->>P: Capture Snapshot
-            P-->>U: Breakpoint Triggered
-        end
-
-        alt Anomaly Detected
-            TA-->>P: Anomaly Alert
-            P->>P: Run Predictions
-            P-->>U: Prediction Warning
-        end
+    alt Error Detected
+        TA->>EC: Classify Error
+        EC->>EC: Pattern Match + Root Cause
+        EC-->>P: ClassifiedError
     end
 
-    U->>P: Request Analysis
-    P->>CP: Compute Fingerprints
-    CP->>CP: Cognitive Metrics
-    CP->>CP: Soul Integrity Check
-    CP->>CP: Memory Health Check
-    CP-->>P: Cognitive Report
+    alt Breakpoint Hit
+        P->>P: Capture State Snapshot
+        P-->>U: Breakpoint Triggered
+    end
 
-    P->>FT: Run Flow Tests
-    FT->>FT: Execute Test Steps
-    FT-->>P: Test Results
+    alt Anomaly Detected
+        TA-->>P: Anomaly Alert
+        P->>P: Run Predictive Failure Engine
+        P-->>U: Prediction Warning
+    end
 
+    Note over U,FT: Phase 3 — Deep Analysis
+    U->>P: computeCognitiveFingerprint(agentId)
+    P->>CP: Profile Agent Behavior
+    CP-->>P: CognitiveFingerprint { 8 dimensions }
+    P->>CP: analyzeSoulIntegrity(agentId, soul)
+    CP-->>P: SoulIntegrityReport
+    P->>CP: analyzeMemoryHealth(memoryState)
+    CP-->>P: MemoryHealthReport
+
+    Note over U,FT: Phase 4 — Flow Testing
+    U->>P: runFlowTests('agent')
+    P->>FT: Execute Flow Tests
+    FT->>FT: Validate Steps
+    FT-->>P: FlowTestReport { passed, failed, coverage }
+
+    Note over U,FT: Phase 5 — Report Generation
+    U->>P: generateReport()
+    P->>P: Aggregate All Findings
+    P->>P: Compute Health Score
     P->>P: Cross-Domain Correlation
-    P->>P: Generate Veronica Report
-    P->>DB: Persist Report
-    P-->>U: VeronicaDebugReport
+    P-->>U: VeronicaDebugReport { healthScore, recommendations }
 
-    Note over P: Session Complete
+    Note over U,FT: Phase 6 — Session Complete
+    U->>P: completeSession()
+    P-->>U: Session finalized with full audit trail

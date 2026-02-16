@@ -1,134 +1,83 @@
 <p align="center">
-  <img src="docs/assets/cipherclaw-logo.png" alt="CipherClaw Logo" width="280" />
+  <img src="docs/assets/cipherclaw-logo.png" alt="CipherClaw" width="240" />
 </p>
 
 <h1 align="center">CipherClaw</h1>
 
 <p align="center">
-  <strong>The World's First OpenClaw Bug Hunter AI Agent</strong>
+  <strong>An OpenClaw debug agent that actually understands your agent system.</strong><br/>
+  <em>Drop it into any OpenClaw swarm. It finds bugs, traces causes, and predicts failures.</em>
 </p>
 
 <p align="center">
-  <a href="https://cipherclaw.com">Website</a> •
-  <a href="#-10-patent-pending-capabilities">Patent Claims</a> •
-  <a href="#-quick-start">Quick Start</a> •
-  <a href="#-architecture">Architecture</a> •
-  <a href="#-api-reference">API Reference</a> •
-  <a href="docs/PATENT.md">Patent Specification</a> •
-  <a href="docs/ARCHITECTURE.md">Technical Spec</a> •
+  <a href="#quick-start">Quick Start</a> ·
+  <a href="#what-it-does">What It Does</a> ·
+  <a href="#openclaw-skill">OpenClaw Skill</a> ·
+  <a href="#api-reference">API Reference</a> ·
+  <a href="docs/ARCHITECTURE.md">Architecture</a> ·
   <a href="CONTRIBUTING.md">Contributing</a>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.0.0-purple?style=for-the-badge" alt="Version" />
-  <img src="https://img.shields.io/badge/license-Apache%202.0-green?style=for-the-badge" alt="License" />
-  <img src="https://img.shields.io/badge/TypeScript-5.x-blue?style=for-the-badge&logo=typescript" alt="TypeScript" />
-  <img src="https://img.shields.io/badge/OpenClaw-Compatible-00ff41?style=for-the-badge" alt="OpenClaw" />
-  <img src="https://img.shields.io/badge/Patent-Pending-red?style=for-the-badge" alt="Patent Pending" />
+  <img src="https://img.shields.io/badge/tests-154_passing-22c55e?style=flat-square" alt="Tests" />
+  <img src="https://img.shields.io/badge/license-Apache_2.0-blue?style=flat-square" alt="License" />
+  <img src="https://img.shields.io/badge/TypeScript-5.x-3178c6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/OpenClaw-compatible-00b894?style=flat-square" alt="OpenClaw" />
+  <img src="https://img.shields.io/badge/dependencies-zero-a78bfa?style=flat-square" alt="Zero Dependencies" />
 </p>
 
 ---
 
-<p align="center">
-  <img src="docs/assets/cipherclaw-banner.png" alt="CipherClaw Banner" width="100%" />
-</p>
+## The Problem
+
+You're running a swarm of OpenClaw agents. Something breaks. You open your trace viewer and see 400 spans across 12 agents, 3 domains, and 5 memory tiers. Good luck.
+
+Existing debug tools were built for single-agent chains. They show you a flat list of spans and call it a day. That's fine when you have one agent calling one tool. It falls apart the moment you have agents delegating to agents, writing to shared memory, and operating across CRM, content, and infrastructure domains simultaneously.
+
+CipherClaw was built for this world. It's an autonomous debug agent that joins your OpenClaw system as a peer, communicates through the event bus, respects agent hierarchy, and does the actual debugging work — not just the observability part.
+
+## What It Does
+
+CipherClaw ships 10 capabilities that go beyond what trace viewers offer. Each one is independently tested and verified.
+
+| Capability | What It Actually Does |
+|-----------|----------------------|
+| **Causal Debug Graph** | Builds a DAG from your traces and scores root cause probability. Stops you from chasing symptoms. |
+| **Cognitive Fingerprinting** | Profiles each agent's behavior across 8 dimensions. Detects when an agent starts acting differently. |
+| **Hierarchy Propagation** | Routes debug events up, down, and laterally through your agent command structure. Parent agents know when children fail. |
+| **Memory Tier Debugging** | Analyzes health across working, short-term, episodic, semantic, and archival memory. Finds stale data and retrieval failures. |
+| **Predictive Failure** | Uses 6 pattern recognizers to predict failures before they happen. Catches error rate spikes, token budget exhaustion, and cascade risks. |
+| **Soul Integrity** | Checks whether agents are staying true to their defined personality and values. Detects drift over time. |
+| **Cross-Domain Correlation** | Finds shared failure patterns across agent, CRM, content, and infrastructure domains. One broken API can cascade everywhere. |
+| **Self-Debugging** | CipherClaw monitors its own operation. If the debugger has a bug, it catches that too. |
+| **Flow Test Synthesis** | Generates integration tests from observed execution traces. Your production runs become your test suite. |
+| **Anomaly Cascade Detection** | Identifies when multiple anomalies cluster in time, indicating a cascading failure rather than isolated incidents. |
+
+For the full technical deep-dive, see [ARCHITECTURE.md](docs/ARCHITECTURE.md). For the research behind these approaches, see [INNOVATIONS.md](docs/INNOVATIONS.md).
 
 ---
 
-## What is CipherClaw?
+## Quick Start
 
-**CipherClaw** is a state-of-the-art, patent-pending AI agent debugging platform built on the [OpenClaw](https://github.com/VoltAgent/awesome-openclaw-skills) architecture. It introduces **10 novel capabilities** that no existing debugging tool provides — making it the most advanced agent debugger in the world.
-
-CipherClaw operates as an autonomous debug agent ("Phantom") within the [ClawLI.AI](https://clawli.ai) platform, reporting to the Sovereign AI (Veronica) alongside the Shaman Orchestrator (Rose). It can debug any OpenClaw-compatible agent system across multiple domains: **Agent Command Center**, **CRM Pipeline**, **Content/Social Media**, and **Memory Systems**.
-
-> **"CipherClaw doesn't just find bugs — it predicts them, traces their causes, fingerprints the agents involved, and heals itself while doing it."**
-
----
-
-## 🔟 10 Patent-Pending Capabilities
-
-Every capability below is a **novel invention** not found in any existing debugging platform. See the full [Patent Specification](docs/PATENT.md) for detailed claims.
-
-| # | Capability | Description | Status |
-|---|-----------|-------------|--------|
-| 1 | **[Causal Debug Graph](#1-causal-debug-graph)** | Automatically constructs DAGs of error propagation with root cause probability scoring | Patent Pending |
-| 2 | **[Cognitive Fingerprinting](#2-cognitive-fingerprinting)** | Profiles agent behavioral patterns and detects cognitive drift from baseline | Patent Pending |
-| 3 | **[Hierarchical Debug Propagation](#3-hierarchical-debug-propagation)** | Routes debug events through multi-tier agent command structures | Patent Pending |
-| 4 | **[Multi-Tier Memory Debugging](#4-multi-tier-memory-debugging)** | Analyzes health across sensory, working, episodic, semantic, and procedural memory | Patent Pending |
-| 5 | **[Predictive Failure Engine](#5-predictive-failure-engine)** | Anticipates system failures before they occur using pattern recognition | Patent Pending |
-| 6 | **[Soul Integrity Monitoring](#6-soul-integrity-monitoring)** | Verifies agent personality and value adherence over time | Patent Pending |
-| 7 | **[Cross-Domain Correlation](#7-cross-domain-correlation)** | Detects shared failure patterns across agent, CRM, content, and infra domains | Patent Pending |
-| 8 | **[Self-Debugging Agent Loop](#8-self-debugging-agent-loop)** | The debug system monitors and repairs its own operation | Patent Pending |
-| 9 | **[Flow Test Synthesis](#9-flow-test-synthesis)** | Automatically generates integration tests from observed execution traces | Patent Pending |
-| 10 | **[Temporal Anomaly Cascade Detection](#10-temporal-anomaly-cascade-detection)** | Identifies cascading failure patterns within configurable time windows | Patent Pending |
-
----
-
-## 🏗 Architecture
-
-<p align="center">
-  <img src="docs/diagrams/architecture.png" alt="CipherClaw Architecture" width="100%" />
-</p>
-
-### Agent Hierarchy
-
-CipherClaw operates as a first-class orchestrator within the ClawLI.AI agent hierarchy:
-
-<p align="center">
-  <img src="docs/diagrams/agent-hierarchy.png" alt="Agent Hierarchy" width="80%" />
-</p>
-
-```
-Veronica (Sovereign AI)
-├── Rose (Shaman Orchestrator)
-│   └── ... (CRM, Content, Social agents)
-└── Phantom (Debug Orchestrator) ← CipherClaw
-    ├── Trace Analyst (Specialist)
-    ├── Error Classifier (Specialist)
-    ├── Cognitive Profiler (Specialist)
-    └── Flow Tester (Worker)
-```
-
-### Debug Session Flow
-
-<p align="center">
-  <img src="docs/diagrams/debug-session-flow.png" alt="Debug Session Flow" width="100%" />
-</p>
-
-### Causal Debug Graph
-
-<p align="center">
-  <img src="docs/diagrams/causal-debug-graph.png" alt="Causal Debug Graph" width="100%" />
-</p>
-
-For the complete technical architecture, see [ARCHITECTURE.md](docs/ARCHITECTURE.md).
-
----
-
-## 🚀 Quick Start
-
-### Installation
+### Install
 
 ```bash
 npm install cipherclaw
 # or
 pnpm add cipherclaw
-# or
-yarn add cipherclaw
 ```
 
-### Basic Usage
+### Use
 
 ```typescript
 import { createCipherClaw } from 'cipherclaw';
 
-// Create a CipherClaw instance
 const cc = createCipherClaw();
 
 // Start a debug session
 const session = cc.startSession({ domain: 'agent' });
 
-// Ingest traces from your agent system
+// Feed it traces from your agent system
 cc.ingestTrace({
   id: 'trace-001',
   sessionId: session.id,
@@ -169,268 +118,270 @@ cc.ingestTrace({
   ],
 });
 
-// Classify errors
+// Ask it questions
 const error = cc.classifyError('Tool execution timed out');
 console.log(error.module);       // 'action'
 console.log(error.severity);     // 'high'
 console.log(error.suggestedFix); // 'Increase tool timeout or add retry logic'
 
-// Get the causal graph
+// Get the causal graph — who caused what
 const graph = cc.getCausalGraph();
-console.log(graph?.rootCauses);  // Nodes identified as root causes
+console.log(graph?.rootCauses.length); // root cause nodes
 
-// Compute cognitive fingerprint
+// Behavioral fingerprint — is this agent acting normal?
 const fp = cc.computeCognitiveFingerprint('my-agent');
-console.log(fp.driftScore);      // 0-100 drift from baseline
+console.log(fp.driftScore); // 0 = stable, higher = drifting
 
-// Run predictive failure analysis
+// Predict what's about to break
 const predictions = cc.getPredictions();
 predictions.forEach(p => {
-  console.log(`${p.predictedFailure}: ${(p.confidence * 100).toFixed(0)}% confidence`);
+  console.log(`${p.predictedFailure}: ${(p.confidence * 100).toFixed(0)}%`);
 });
 
-// Generate Veronica report
+// Full health report
 const report = cc.generateReport();
-console.log(`Health Score: ${report.healthScore}/100`);
-console.log(`Recommendations: ${report.recommendations.join(', ')}`);
+console.log(`Health: ${report.healthScore}/100`);
 
-// Complete the session
 cc.completeSession();
 ```
 
-### OpenClaw Integration
+---
+
+## OpenClaw Skill
+
+CipherClaw is a standard OpenClaw skill. Drop it into your `~/.openclaw/skills/` directory or install via ClawHub.
+
+### SKILL.md
+
+```yaml
+---
+name: cipherclaw
+description: Debug agent that traces causes, profiles behavior, and predicts failures in agent swarms.
+user-invocable: true
+---
+```
+
+### Programmatic Integration
 
 ```typescript
 import { CIPHERCLAW_MANIFEST, createCipherClaw } from 'cipherclaw';
 
-// Register CipherClaw as an OpenClaw skill
-const manifest = CIPHERCLAW_MANIFEST;
-console.log(manifest.name);        // 'cipherclaw'
-console.log(manifest.agents);      // 5 agent definitions
-console.log(manifest.skills);      // 10 skill definitions
-console.log(manifest.tools);       // 14 tool definitions
-console.log(manifest.events);      // 12 event definitions
+// The manifest describes CipherClaw to any OpenClaw gateway
+console.log(CIPHERCLAW_MANIFEST.name);    // 'cipherclaw'
+console.log(CIPHERCLAW_MANIFEST.agents);  // 5 agents
+console.log(CIPHERCLAW_MANIFEST.skills);  // 10 skills
+console.log(CIPHERCLAW_MANIFEST.tools);   // 14 tools
+console.log(CIPHERCLAW_MANIFEST.events);  // 12 events
 
-// Use the event system
+// Subscribe to real-time debug events
 const cc = createCipherClaw();
-cc.on('error-classified', (event) => {
-  console.log(`Error classified: ${event.payload.module} / ${event.payload.severity}`);
-});
-cc.on('anomaly-detected', (event) => {
-  console.log(`Anomaly: ${event.payload.type}`);
-});
-cc.on('prediction-generated', (event) => {
-  console.log(`Prediction: ${event.payload.confidence}% confidence`);
-});
+cc.on('error-classified', (e) => console.log(e.payload.module));
+cc.on('anomaly-detected', (e) => console.log(e.payload.type));
+cc.on('prediction-generated', (e) => console.log(e.payload.confidence));
+cc.on('soul-drift-detected', (e) => console.log(e.payload.driftScore));
 ```
+
+### Agent Hierarchy
+
+When running inside an OpenClaw system, CipherClaw operates as an orchestrator-level agent (Phantom) with specialized sub-agents:
+
+```
+Your Sovereign Agent
+├── Your Other Orchestrators
+└── Phantom (CipherClaw Debug Orchestrator)
+    ├── Trace Analyst — ingests and correlates traces
+    ├── Error Classifier — categorizes and scores errors
+    ├── Cognitive Profiler — fingerprints agent behavior
+    └── Flow Tester — synthesizes and runs integration tests
+```
+
+<p align="center">
+  <img src="docs/diagrams/architecture.png" alt="CipherClaw Architecture" width="100%" />
+</p>
 
 ---
 
-## 📖 API Reference
+## How It Works
 
-### `createCipherClaw(config?)`
+### Causal Debug Graph
 
-Factory function that creates a new CipherClaw adapter instance.
+Instead of showing you a flat trace, CipherClaw builds a directed acyclic graph of error propagation. Each node is scored with root cause probability so you know where to look first.
+
+<p align="center">
+  <img src="docs/diagrams/causal-debug-graph.png" alt="Causal Debug Graph" width="90%" />
+</p>
+
+### Debug Session Lifecycle
+
+A session moves through 6 phases: init → ingest → analyze → test → report → complete. Each phase emits events that other agents in your system can subscribe to.
+
+<p align="center">
+  <img src="docs/diagrams/debug-session-flow.png" alt="Debug Session Flow" width="100%" />
+</p>
+
+---
+
+## API Reference
+
+### Factory
 
 ```typescript
 const cc = createCipherClaw({
-  maxTraces: 10000,
-  anomalyThresholdStdDev: 2.5,
-  cascadeWindowMs: 30000,
-  soulDriftThreshold: 15,
-  enableSelfDebug: true,
+  maxTraces: 10000,              // max traces per session
+  anomalyThresholdStdDev: 2.5,  // z-score threshold for anomaly detection
+  cascadeWindowMs: 30000,        // time window for cascade grouping
+  soulDriftThreshold: 15,        // drift alert threshold (0-100)
+  enableSelfDebug: true,         // recursive self-monitoring
   enableHierarchyPropagation: true,
 });
 ```
 
-### Session Management
+### Sessions
 
-| Method | Description | Returns |
-|--------|-------------|---------|
-| `startSession(opts?)` | Start a new debug session | `DebugSession` |
-| `completeSession(id?)` | Complete and finalize a session | `DebugSession` |
-| `getSession(id?)` | Get session by ID | `DebugSession` |
-| `getAllSessions()` | Get all sessions | `DebugSession[]` |
-| `pauseSession(id?)` | Pause a session | `void` |
-| `resumeSession(id?)` | Resume a paused session | `void` |
+| Method | Returns |
+|--------|---------|
+| `startSession(opts?)` | `DebugSession` |
+| `completeSession(id?)` | `DebugSession` |
+| `getSession(id?)` | `DebugSession` |
+| `getAllSessions()` | `DebugSession[]` |
+| `pauseSession(id?)` | `void` |
+| `resumeSession(id?)` | `void` |
 
-### Trace Ingestion
+### Ingestion
 
-| Method | Description | Returns |
-|--------|-------------|---------|
-| `ingestTrace(trace, id?)` | Ingest a complete trace | `void` |
-| `ingestSpan(span, id?)` | Ingest a single span | `void` |
+| Method | Returns |
+|--------|---------|
+| `ingestTrace(trace, id?)` | `void` |
+| `ingestSpan(span, id?)` | `void` |
 
 ### Analysis
 
-| Method | Description | Returns |
-|--------|-------------|---------|
-| `classifyError(msg, span?, id?)` | Classify an error | `ClassifiedError` |
-| `getCausalGraph(id?)` | Get the causal debug graph | `CausalGraph` |
-| `getRootCauses(id?)` | Get identified root causes | `CausalNode[]` |
-| `computeCognitiveFingerprint(agentId, id?)` | Compute agent fingerprint | `CognitiveFingerprint` |
-| `analyzeSoulIntegrity(agentId, soul, behavior, id?)` | Check soul adherence | `SoulIntegrityReport` |
-| `analyzeMemoryHealth(state, id?)` | Analyze memory health | `MemoryHealthReport` |
-| `detectAnomalies(spans, id?)` | Detect anomalies | `Anomaly[]` |
-| `detectCrossDomainCorrelations(id?)` | Find cross-domain correlations | `CrossDomainCorrelation[]` |
-| `getPredictions(id?)` | Get failure predictions | `FailurePrediction[]` |
+| Method | What It Does |
+|--------|-------------|
+| `classifyError(msg, span?, id?)` | Classifies an error by module, severity, and suggested fix |
+| `getCausalGraph(id?)` | Returns the causal debug graph for the session |
+| `getRootCauses(id?)` | Returns root cause nodes sorted by probability |
+| `computeCognitiveFingerprint(agentId, id?)` | Profiles agent behavior across 8 dimensions |
+| `analyzeSoulIntegrity(agentId, soul, behavior, id?)` | Checks personality and value adherence |
+| `analyzeMemoryHealth(state, id?)` | Analyzes health across 5 memory tiers |
+| `detectAnomalies(spans, id?)` | Statistical anomaly detection on span data |
+| `detectCrossDomainCorrelations(id?)` | Finds shared failures across domains |
+| `getPredictions(id?)` | Returns predicted failures with confidence scores |
+| `propagateDebugEvent(event, id?)` | Routes a debug event through agent hierarchy |
+| `selfDebug()` | Runs self-diagnostics on the engine |
+| `synthesizeFlowTest(traceId, id?)` | Generates an integration test from a trace |
+| `runFlowTests(domain?, id?)` | Runs all flow tests for a domain |
 
-### Flow Tests
+### Breakpoints
 
-| Method | Description | Returns |
-|--------|-------------|---------|
-| `synthesizeFlowTest(traceId, id?)` | Generate test from trace | `FlowTest` |
-| `runFlowTests(domain?, id?)` | Run all flow tests | `FlowTestReport` |
+| Method | Returns |
+|--------|---------|
+| `addBreakpoint(type, condition?, meta?, id?)` | `Breakpoint` |
+| `removeBreakpoint(bpId, id?)` | `void` |
+| `toggleBreakpoint(bpId, id?)` | `void` |
+| `getSnapshots(id?)` | `StateSnapshot[]` |
+| `replayToSnapshot(snapId, id?)` | `StateSnapshot` |
 
-### Breakpoints & Replay
-
-| Method | Description | Returns |
-|--------|-------------|---------|
-| `addBreakpoint(type, condition?, meta?, id?)` | Add a breakpoint | `Breakpoint` |
-| `removeBreakpoint(bpId, id?)` | Remove a breakpoint | `void` |
-| `toggleBreakpoint(bpId, id?)` | Toggle breakpoint on/off | `void` |
-| `captureSnapshot(id?)` | Capture state snapshot | `StateSnapshot` |
-| `getSnapshots(id?)` | Get all snapshots | `StateSnapshot[]` |
-| `replayToSnapshot(snapId, id?)` | Replay to a snapshot | `StateSnapshot` |
-
-### Hierarchy
-
-| Method | Description | Returns |
-|--------|-------------|---------|
-| `propagateDebugEvent(event, id?)` | Propagate debug event through hierarchy | `HierarchyDebugEvent` |
-
-### Reports & Self-Debug
-
-| Method | Description | Returns |
-|--------|-------------|---------|
-| `generateReport(id?)` | Generate Veronica debug report | `VeronicaDebugReport` |
-| `selfDebug()` | Run self-diagnostics | `SelfDebugResult` |
-| `getSelfDebugLog()` | Get self-debug history | `SelfDebugEntry[]` |
+11 breakpoint types: `on_error`, `on_tool_call`, `on_iteration`, `on_span_category`, `on_agent`, `on_memory_op`, `on_cost_threshold`, `on_token_threshold`, `on_latency`, `on_pipeline_stage`, `conditional`.
 
 ### Events
 
-| Method | Description | Returns |
-|--------|-------------|---------|
-| `on(type, handler)` | Listen for specific event | `() => void` (unsubscribe) |
-| `onAny(handler)` | Listen for all events | `() => void` (unsubscribe) |
-
-### Event Types
-
-| Event | Emitted When |
-|-------|-------------|
-| `session-started` | New debug session begins |
-| `session-completed` | Debug session completes |
-| `error-classified` | Error is classified |
-| `anomaly-detected` | Anomaly is detected |
-| `cascade-detected` | Cascading failure detected |
+| Event | When |
+|-------|------|
+| `session-started` | New session begins |
+| `session-completed` | Session completes |
+| `error-classified` | Error classified |
+| `anomaly-detected` | Anomaly found |
+| `cascade-detected` | Cascade identified |
 | `prediction-generated` | Failure predicted |
 | `breakpoint-hit` | Breakpoint triggered |
-| `soul-drift-detected` | Soul drift detected |
-| `cognitive-drift-detected` | Cognitive drift detected |
+| `soul-drift-detected` | Personality drift |
+| `cognitive-drift-detected` | Behavioral drift |
 
 ---
 
-## 🆚 Competitive Comparison
+## Tests
 
-| Feature | CipherClaw | LangSmith | Maxim | Arize | Blinky | VoltAgent |
-|---------|-----------|-----------|-------|-------|--------|-----------|
-| Causal Debug Graph | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Cognitive Fingerprinting | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Hierarchy Propagation | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Memory Tier Debug | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Predictive Failure | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Soul Integrity | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Cross-Domain Correlation | ✅ | ❌ | Partial | ❌ | ❌ | ❌ |
-| Self-Debugging | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Flow Test Synthesis | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Anomaly Cascades | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| OpenClaw Compatible | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Multi-Domain | ✅ | ❌ | Partial | ❌ | ❌ | ❌ |
-| Agent Hierarchy Aware | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| 11 Breakpoint Types | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Time-Travel Replay | ✅ | ❌ | ❌ | ❌ | Partial | ❌ |
+154 tests. No mocks. No stubs. Every test runs against the real engine.
+
+```bash
+pnpm test
+```
+
+| Suite | Count | What It Covers |
+|-------|-------|---------------|
+| Unit — Core Capabilities | 66 | All 10 capabilities with edge cases |
+| End-to-End — Sessions | 13 | Full lifecycle across all domains |
+| Smoke — API Surface | 75 | Every public method and event |
 
 ---
 
-## 📁 Project Structure
+## Platforms
+
+| Runtime | Status |
+|---------|--------|
+| Node.js 18+ | Tested |
+| Deno | Compatible (ESM) |
+| Bun | Compatible |
+| Browser | Compatible (tree-shakeable) |
+| Any OpenClaw system | Plug and play |
+
+Zero runtime dependencies. Pure TypeScript.
+
+---
+
+## Project Structure
 
 ```
 CipherClaw/
 ├── src/
-│   ├── index.ts                    # Main entry point — all exports
-│   ├── types/
-│   │   └── index.ts                # All TypeScript types and interfaces
-│   ├── core/
-│   │   └── engine.ts               # Core debug engine (1,400+ lines)
+│   ├── index.ts              # all exports
+│   ├── types/index.ts        # 40+ interfaces
+│   ├── core/engine.ts        # the engine (1,888 lines)
 │   └── openclaw/
-│       ├── manifest.ts             # OpenClaw skill manifest & agent defs
-│       └── adapter.ts              # OpenClaw adapter with event system
+│       ├── manifest.ts       # OpenClaw skill manifest
+│       └── adapter.ts        # event bus adapter
 ├── docs/
-│   ├── ARCHITECTURE.md             # Technical architecture specification
-│   ├── PATENT.md                   # Patent specification with 10 claims
-│   ├── assets/
-│   │   ├── cipherclaw-logo.png     # Project logo
-│   │   └── cipherclaw-banner.png   # GitHub banner
-│   └── diagrams/
-│       ├── architecture.mmd/.png   # System architecture diagram
-│       ├── agent-hierarchy.mmd/.png # Agent hierarchy diagram
-│       ├── causal-debug-graph.mmd/.png # CDG example diagram
-│       └── debug-session-flow.mmd/.png # Session flow sequence diagram
-├── CONTRIBUTING.md                 # Contribution guidelines
-├── LICENSE                         # Apache 2.0
-├── package.json                    # Package configuration
-├── tsconfig.json                   # TypeScript configuration
-└── README.md                       # This file
+│   ├── ARCHITECTURE.md       # technical deep-dive
+│   ├── INNOVATIONS.md        # novel approaches
+│   ├── assets/               # logo, banner
+│   └── diagrams/             # .mmd sources + .png renders
+├── skills/
+│   └── cipherclaw/
+│       └── SKILL.md          # OpenClaw skill definition
+└── src/__tests__/            # 154 tests
 ```
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-### Development
+Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 ```bash
-# Clone the repo
 git clone https://github.com/Alexi5000/CipherClaw.git
 cd CipherClaw
-
-# Install dependencies
 pnpm install
-
-# Build
+pnpm test        # 154 tests
+pnpm typecheck   # strict mode
 pnpm build
-
-# Run tests
-pnpm test
-
-# Type check
-pnpm typecheck
 ```
 
 ---
 
-## 📜 License
+## License
 
-CipherClaw is licensed under the [Apache License 2.0](LICENSE).
+[Apache 2.0](LICENSE). Use it, fork it, build on it. Attribution appreciated.
 
----
-
-## 🔗 Links
-
-- **Website:** [cipherclaw.com](https://cipherclaw.com)
-- **GitHub:** [github.com/Alexi5000/CipherClaw](https://github.com/Alexi5000/CipherClaw)
-- **ClawLI.AI:** [clawli.ai](https://clawli.ai)
-- **Patent Specification:** [docs/PATENT.md](docs/PATENT.md)
-- **Architecture:** [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
+Some approaches in this project represent novel work. See [INNOVATIONS.md](docs/INNOVATIONS.md) for details.
 
 ---
 
 <p align="center">
-  <strong>Built with 🔮 by <a href="https://clawli.ai">ClawLI.AI</a></strong>
+  <img src="docs/assets/cipherclaw-logo.png" alt="CipherClaw" width="64" />
 </p>
 
 <p align="center">
-  <em>CipherClaw — Because bugs can't hide from a phantom with a claw.</em>
+  <strong>Built by <a href="https://clawli.ai">ClawLI.AI</a></strong><br/>
+  <sub>Because bugs can't hide from a phantom with a claw.</sub>
 </p>

@@ -76,7 +76,7 @@ export interface Trace {
 }
 
 // ─────────────────────────────────────────────────────────────
-// Patent Claim 1: Causal Debug Graph (CDG)
+// Capability 1: Causal Debug Graph (CDG)
 // ─────────────────────────────────────────────────────────────
 
 export interface CausalNode {
@@ -112,7 +112,7 @@ export interface CausalEdge {
 }
 
 // ─────────────────────────────────────────────────────────────
-// Patent Claim 2: Cognitive Fingerprinting
+// Capability 2: Cognitive Fingerprinting
 // ─────────────────────────────────────────────────────────────
 
 export interface CognitiveMetrics {
@@ -140,7 +140,7 @@ export interface CognitiveFingerprint {
 }
 
 // ─────────────────────────────────────────────────────────────
-// Patent Claim 3: Hierarchical Debug Propagation
+// Capability 3: Hierarchical Debug Propagation
 // ─────────────────────────────────────────────────────────────
 
 export interface HierarchyDebugEvent {
@@ -157,7 +157,7 @@ export interface HierarchyDebugEvent {
 }
 
 // ─────────────────────────────────────────────────────────────
-// Patent Claim 4: Memory Tier Debugging
+// Capability 4: Memory Tier Debugging
 // ─────────────────────────────────────────────────────────────
 
 export type MemoryTier = 'working' | 'short_term' | 'episodic' | 'semantic' | 'archival';
@@ -192,7 +192,7 @@ export interface MemoryIssue {
 }
 
 // ─────────────────────────────────────────────────────────────
-// Patent Claim 5: Predictive Failure Engine
+// Capability 5: Predictive Failure Engine
 // ─────────────────────────────────────────────────────────────
 
 export interface FailurePrediction {
@@ -227,7 +227,7 @@ export interface PatternIndicator {
 }
 
 // ─────────────────────────────────────────────────────────────
-// Patent Claim 6: Soul Integrity Monitor
+// Capability 6: Soul Integrity Monitor
 // ─────────────────────────────────────────────────────────────
 
 export interface SoulIntegrityReport {
@@ -257,7 +257,7 @@ export interface SoulDriftEvent {
 }
 
 // ─────────────────────────────────────────────────────────────
-// Patent Claim 7: Cross-Domain Correlation
+// Capability 7: Cross-Domain Correlation
 // ─────────────────────────────────────────────────────────────
 
 export interface CrossDomainCorrelation {
@@ -272,7 +272,7 @@ export interface CrossDomainCorrelation {
 }
 
 // ─────────────────────────────────────────────────────────────
-// Patent Claim 9: Flow Test Synthesis
+// Capability 9: Flow Test Synthesis
 // ─────────────────────────────────────────────────────────────
 
 export interface FlowTest {
@@ -306,7 +306,7 @@ export interface FlowAssertion {
 }
 
 // ─────────────────────────────────────────────────────────────
-// Patent Claim 10: Temporal Anomaly Cascade
+// Capability 10: Temporal Anomaly Cascade
 // ─────────────────────────────────────────────────────────────
 
 export interface Anomaly {
