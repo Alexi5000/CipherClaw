@@ -1,6 +1,6 @@
 {
   "name": "cipherclaw",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An OpenClaw debug agent that traces causes, profiles behavior, and predicts failures in multi-agent systems.",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",

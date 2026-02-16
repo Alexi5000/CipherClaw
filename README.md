@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/tests-154_passing-22c55e?style=flat-square" alt="Tests" />
+  <img src="https://img.shields.io/badge/tests-206_passing-22c55e?style=flat-square" alt="Tests" />
   <img src="https://img.shields.io/badge/license-Apache_2.0-blue?style=flat-square" alt="License" />
   <img src="https://img.shields.io/badge/TypeScript-5.x-3178c6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
   <img src="https://img.shields.io/badge/OpenClaw-compatible-00b894?style=flat-square" alt="OpenClaw" />
@@ -302,7 +302,7 @@ const cc = createCipherClaw({
 
 ## Tests
 
-154 tests. No mocks. No stubs. Every test runs against the real engine.
+206 tests. No mocks. No stubs. Every test runs against the real engine.
 
 ```bash
 pnpm test
@@ -311,7 +311,7 @@ pnpm test
 | Suite | Count | What It Covers |
 |-------|-------|---------------|
 | Unit — Core Capabilities | 66 | All 10 capabilities with edge cases |
-| End-to-End — Sessions | 13 | Full lifecycle across all domains |
+| End-to-End — Sessions | 65 | Full lifecycle across all domains |
 | Smoke — API Surface | 75 | Every public method and event |
 
 ---
@@ -337,7 +337,25 @@ CipherClaw/
 ├── src/
 │   ├── index.ts              # all exports
 │   ├── types/index.ts        # 40+ interfaces
-│   ├── core/engine.ts        # the engine (1,888 lines)
+│   ├── core/
+│   │   ├── engine.ts         # thin orchestrator (378 lines)
+│   │   ├── anomaly-detector.ts
+│   │   ├── breakpoints.ts
+│   │   ├── causal-graph.ts
+│   │   ├── cognitive-profiler.ts
+│   │   ├── cross-domain.ts
+│   │   ├── error-classifier.ts
+│   │   ├── flow-runner.ts
+│   │   ├── flow-tests.ts
+│   │   ├── hierarchy-propagation.ts
+│   │   ├── memory-debugger.ts
+│   │   ├── patterns.ts
+│   │   ├── predictive-engine.ts
+│   │   ├── report-generator.ts
+│   │   ├── self-debug.ts
+│   │   ├── snapshots.ts
+│   │   ├── soul-monitor.ts
+│   │   └── utils.ts
 │   └── openclaw/
 │       ├── manifest.ts       # OpenClaw skill manifest
 │       └── adapter.ts        # event bus adapter
@@ -348,8 +366,11 @@ CipherClaw/
 │   └── diagrams/             # .mmd sources + .png renders
 ├── skills/
 │   └── cipherclaw/
-│       └── SKILL.md          # OpenClaw skill definition
-└── src/__tests__/            # 154 tests
+│       ├── SKILL.md          # OpenClaw skill definition
+│       ├── SOUL.md           # Phantom agent soul
+│       ├── IDENTITY.md       # agent identity
+│       └── AGENTS.md         # operating instructions
+└── src/__tests__/            # 206 tests
 ```
 
 ---
@@ -362,7 +383,7 @@ Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 git clone https://github.com/Alexi5000/CipherClaw.git
 cd CipherClaw
 pnpm install
-pnpm test        # 154 tests
+pnpm test        # 206 tests
 pnpm typecheck   # strict mode
 pnpm build
 ```

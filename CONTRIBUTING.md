@@ -11,7 +11,7 @@ pnpm install
 pnpm test
 ```
 
-All 154 tests should pass. If they don't, open an issue.
+All 206 tests should pass. If they don't, open an issue.
 
 ## What We're Looking For
 
@@ -30,7 +30,7 @@ All 154 tests should pass. If they don't, open an issue.
 1. Fork the repo
 2. Create a branch (`git checkout -b fix/your-fix` or `feat/your-feature`)
 3. Make your changes
-4. Run `pnpm test` — all 154 tests must pass
+4. Run `pnpm test` — all 206 tests must pass
 5. Run `pnpm typecheck` — zero errors in strict mode
 6. Commit with a descriptive message
 7. Push and open a PR
@@ -46,15 +46,17 @@ CipherClaw is written in TypeScript with strict mode enabled. A few guidelines:
 
 ## Architecture
 
-When adding new capabilities:
+CipherClaw uses a modular architecture. Each capability lives in its own file under `src/core/`, and the engine is a thin orchestrator that wires them together.
 
 1. **Types** go in `src/types/index.ts`
-2. **Engine logic** goes in `src/core/engine.ts`
-3. **OpenClaw tools** are registered in `src/openclaw/manifest.ts`
-4. **Adapter methods** are added to `src/openclaw/adapter.ts`
-5. **Exports** are added to `src/index.ts`
+2. **Module logic** goes in a dedicated file under `src/core/` (e.g., `causal-graph.ts`, `memory-debugger.ts`)
+3. **Engine orchestration** is in `src/core/engine.ts` — it delegates to modules, never implements directly
+4. **OpenClaw tools** are registered in `src/openclaw/manifest.ts`
+5. **Adapter methods** are added to `src/openclaw/adapter.ts`
+6. **Exports** are added to `src/index.ts`
+7. **Soul files** live in `skills/cipherclaw/` (SOUL.md, IDENTITY.md, AGENTS.md)
 
-This follows the OpenClaw skill architecture. Keep things modular.
+This follows the OpenClaw skill and agent architecture. Keep things modular.
 
 ## Tests
 

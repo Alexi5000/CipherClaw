@@ -277,7 +277,7 @@ CipherClaw integrates with any OpenClaw system through three mechanisms:
 |-----------|-----------|
 | Language | TypeScript (100%) |
 | Runtime | Node.js 18+ / Browser / Deno / Bun |
-| Testing | Vitest (154 tests) |
+| Testing | Vitest (206 tests) |
 | Dependencies | Zero runtime dependencies |
 | Package Manager | pnpm |
 | Architecture | OpenClaw Agent Standard |
