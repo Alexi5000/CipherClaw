@@ -1,10 +1,4 @@
-/**
- * CipherClaw — OpenClaw Skill Manifest & Agent Definitions
- * Defines CipherClaw as an OpenClaw-compatible skill with full agent hierarchy
- *
- * Copyright 2026 ClawLI.AI / CipherClaw
- * Licensed under Apache 2.0
- */
+// CipherClaw — OpenClaw skill manifest and agent definitions.
 
 import type { OpenClawAgentDef } from '../types/index.js';
 
@@ -392,8 +386,8 @@ export const CIPHERCLAW_EVENTS: OpenClawEventDef[] = [
 
 export const CIPHERCLAW_MANIFEST: OpenClawSkillManifest = {
   name: 'cipherclaw',
-  version: '1.0.0',
-  description: 'CipherClaw — The World\'s First OpenClaw Bug Hunter AI Agent. Debug platform with causal analysis, cognitive fingerprinting, predictive failure detection, soul integrity monitoring, and cross-domain correlation.',
+  version: '1.0.2',
+  description: 'Zero-dependency AI agent debugging toolkit. Causal analysis, cognitive fingerprinting, predictive failure detection, soul integrity monitoring, and cross-domain correlation.',
   author: 'ClawLI.AI',
   license: 'Apache-2.0',
   homepage: 'https://cipherclaw.com',

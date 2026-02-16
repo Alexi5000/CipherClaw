@@ -338,7 +338,7 @@ CipherClaw/
 │   ├── index.ts              # all exports
 │   ├── types/index.ts        # 40+ interfaces
 │   ├── core/
-│   │   ├── engine.ts         # thin orchestrator (378 lines)
+│   │   ├── engine.ts         # thin orchestrator (~300 lines)
 │   │   ├── anomaly-detector.ts
 │   │   ├── breakpoints.ts
 │   │   ├── causal-graph.ts
@@ -367,9 +367,9 @@ CipherClaw/
 ├── skills/
 │   └── cipherclaw/
 │       ├── SKILL.md          # OpenClaw skill definition
-│       ├── SOUL.md           # Phantom agent soul
-│       ├── IDENTITY.md       # agent identity
-│       └── AGENTS.md         # operating instructions
+│       └── SOUL.md           # Phantom agent soul
+├── AGENTS.md                 # build/test/lint instructions
+├── CLAUDE.md                 # symlink → AGENTS.md
 └── src/__tests__/            # 206 tests
 ```
 
@@ -404,5 +404,5 @@ Some approaches in this project represent novel work. See [INNOVATIONS.md](docs/
 
 <p align="center">
   <strong>Built by <a href="https://clawli.ai">ClawLI.AI</a></strong><br/>
-  <sub>Because bugs can't hide from a phantom with a claw.</sub>
+  <sub>CipherClaw — zero-dependency AI agent debugging toolkit</sub>
 </p>

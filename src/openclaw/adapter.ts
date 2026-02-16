@@ -1,26 +1,19 @@
-/**
- * CipherClaw — OpenClaw Adapter
- * Provides a standardized interface for integrating CipherClaw with any
- * OpenClaw-compatible agent orchestration system.
- *
- * Copyright 2026 ClawLI.AI / CipherClaw
- * Licensed under Apache 2.0
- */
+// CipherClaw — OpenClaw adapter. Wraps the engine with an event bus for
+// integration into any OpenClaw-compatible agent orchestration system.
 
 import { CipherClawEngine } from '../core/engine.js';
 import type {
   DebugDomain, Span, Trace, DebugSession, VeronicaDebugReport,
   CausalGraph, CognitiveFingerprint, MemoryHealthReport,
   SoulIntegrityReport, FailurePrediction, CrossDomainCorrelation,
-  Anomaly, AnomalyCascade, FlowTest, ClassifiedError,
+  Anomaly, FlowTest, ClassifiedError,
   Breakpoint, BreakpointType, StateSnapshot,
   CipherClawConfig, OpenClawEvent, MemoryTier,
+  HierarchyDebugEvent,
 } from '../types/index.js';
 import { CIPHERCLAW_MANIFEST } from './manifest.js';
 
-// ═══════════════════════════════════════════════════════════════
-// EVENT EMITTER INTERFACE
-// ═══════════════════════════════════════════════════════════════
+// ── Event Bus ────────────────────────────────────────────────────────────────
 
 export type EventHandler = (event: OpenClawEvent) => void;
 
@@ -36,25 +29,22 @@ class EventBus {
   }
 
   emit(event: OpenClawEvent): void {
-    const handlers = this.handlers.get(event.type);
-    if (handlers) {
-      for (const handler of handlers) {
-        try { handler(event); } catch (e) { console.error('[CipherClaw] Event handler error:', e); }
-      }
-    }
-    // Also emit to wildcard listeners
-    const wildcardHandlers = this.handlers.get('*');
-    if (wildcardHandlers) {
-      for (const handler of wildcardHandlers) {
-        try { handler(event); } catch (e) { console.error('[CipherClaw] Wildcard handler error:', e); }
+    for (const key of [event.type, '*']) {
+      const set = this.handlers.get(key);
+      if (set) {
+        for (const h of set) {
+          try { h(event); } catch (e) { console.error('[CipherClaw] Event handler error:', e); }
+        }
       }
     }
   }
 }
 
-// ═══════════════════════════════════════════════════════════════
-// CIPHERCLAW OPENCLAW ADAPTER
-// ═══════════════════════════════════════════════════════════════
+function evt(type: string, source: string, target: string | null, payload: Record<string, unknown>): OpenClawEvent {
+  return { id: `evt_${Date.now()}`, type, source, target, timestamp: Date.now(), payload };
+}
+
+// ── Adapter ──────────────────────────────────────────────────────────────────
 
 export class CipherClawAdapter {
   private engine: CipherClawEngine;
@@ -66,29 +56,14 @@ export class CipherClawAdapter {
     this.eventBus = new EventBus();
   }
 
-  // ─────────────────────────────────────────────────────────
-  // MANIFEST
-  // ─────────────────────────────────────────────────────────
+  getManifest() { return CIPHERCLAW_MANIFEST; }
 
-  getManifest() {
-    return CIPHERCLAW_MANIFEST;
-  }
-
-  // ─────────────────────────────────────────────────────────
-  // SESSION LIFECYCLE
-  // ─────────────────────────────────────────────────────────
+  // ── Sessions ─────────────────────────────────────────────────────────────
 
   startSession(opts?: { domain?: DebugDomain; targetAgentId?: string }): DebugSession {
     const session = this.engine.startSession(opts);
     this.activeSessionId = session.id;
-    this.eventBus.emit({
-      id: `evt_${Date.now()}`,
-      type: 'session-started',
-      source: 'cipherclaw-phantom',
-      target: null,
-      timestamp: Date.now(),
-      payload: { sessionId: session.id, domain: session.domain },
-    });
+    this.eventBus.emit(evt('session-started', 'cipherclaw-phantom', null, { sessionId: session.id, domain: session.domain }));
     return session;
   }
 
@@ -97,14 +72,7 @@ export class CipherClawAdapter {
     if (!id) return undefined;
     const session = this.engine.completeSession(id);
     if (session) {
-      this.eventBus.emit({
-        id: `evt_${Date.now()}`,
-        type: 'session-completed',
-        source: 'cipherclaw-phantom',
-        target: null,
-        timestamp: Date.now(),
-        payload: { sessionId: session.id, healthScore: session.veronicaReport?.healthScore ?? 0 },
-      });
+      this.eventBus.emit(evt('session-completed', 'cipherclaw-phantom', null, { sessionId: session.id, healthScore: session.veronicaReport?.healthScore ?? 0 }));
     }
     return session;
   }
@@ -125,22 +93,13 @@ export class CipherClawAdapter {
     this.engine.resumeSession(sessionId ?? this.activeSessionId ?? '');
   }
 
-  // ─────────────────────────────────────────────────────────
-  // TRACE INGESTION (OpenClaw Event Listener)
-  // ─────────────────────────────────────────────────────────
+  // ── Ingestion ────────────────────────────────────────────────────────────
 
   ingestTrace(trace: Trace, sessionId?: string): void {
     const id = sessionId ?? this.activeSessionId;
     if (!id) return;
     this.engine.ingestTrace(id, trace);
-    this.eventBus.emit({
-      id: `evt_${Date.now()}`,
-      type: 'trace-ingested',
-      source: 'cipherclaw-trace-analyst',
-      target: null,
-      timestamp: Date.now(),
-      payload: { traceId: trace.id, spans: trace.spans.length },
-    });
+    this.eventBus.emit(evt('trace-ingested', 'cipherclaw-trace-analyst', null, { traceId: trace.id, spans: trace.spans.length }));
   }
 
   ingestSpan(span: Span, sessionId?: string): void {
@@ -149,28 +108,17 @@ export class CipherClawAdapter {
     this.engine.ingestSpan(id, span);
   }
 
-  // ─────────────────────────────────────────────────────────
-  // ERROR CLASSIFICATION
-  // ─────────────────────────────────────────────────────────
+  // ── Error Classification ─────────────────────────────────────────────────
 
   classifyError(message: string, span?: Partial<Span>, sessionId?: string): ClassifiedError {
     const id = sessionId ?? this.activeSessionId;
     if (!id) throw new Error('No active session');
     const error = this.engine.classifyError(id, message, span);
-    this.eventBus.emit({
-      id: `evt_${Date.now()}`,
-      type: 'error-classified',
-      source: 'cipherclaw-error-classifier',
-      target: null,
-      timestamp: Date.now(),
-      payload: { errorId: error.id, module: error.module, severity: error.severity },
-    });
+    this.eventBus.emit(evt('error-classified', 'cipherclaw-error-classifier', null, { errorId: error.id, module: error.module, severity: error.severity }));
     return error;
   }
 
-  // ─────────────────────────────────────────────────────────
-  // CAUSAL ANALYSIS
-  // ─────────────────────────────────────────────────────────
+  // ── Causal Analysis ──────────────────────────────────────────────────────
 
   getCausalGraph(sessionId?: string): CausalGraph | null {
     return this.engine.getCausalGraph(sessionId ?? this.activeSessionId ?? '');
@@ -180,113 +128,78 @@ export class CipherClawAdapter {
     return this.engine.getRootCauses(sessionId ?? this.activeSessionId ?? '');
   }
 
-  // ─────────────────────────────────────────────────────────
-  // COGNITIVE FINGERPRINTING
-  // ─────────────────────────────────────────────────────────
+  // ── Cognitive Fingerprinting ─────────────────────────────────────────────
 
-  computeCognitiveFingerprint(agentId: string, sessionId?: string): CognitiveFingerprint {
+  computeCognitiveFingerprint(agentId: string, sessionId?: string): CognitiveFingerprint | null {
     const id = sessionId ?? this.activeSessionId;
-    if (!id) throw new Error('No active session');
+    if (!id) return null;
     const fp = this.engine.computeCognitiveFingerprint(id, agentId);
-    if (fp.driftScore > 15) {
-      this.eventBus.emit({
-        id: `evt_${Date.now()}`,
-        type: 'cognitive-drift-detected',
-        source: 'cipherclaw-cognitive-profiler',
-        target: agentId,
-        timestamp: Date.now(),
-        payload: { agentId, driftScore: fp.driftScore },
-      });
+    if (fp && fp.driftScore > 15) {
+      this.eventBus.emit(evt('cognitive-drift-detected', 'cipherclaw-cognitive-profiler', agentId, { agentId, driftScore: fp.driftScore }));
     }
     return fp;
   }
 
-  // ─────────────────────────────────────────────────────────
-  // SOUL INTEGRITY
-  // ─────────────────────────────────────────────────────────
+  // ── Soul Integrity ───────────────────────────────────────────────────────
+  // Engine signature: analyzeSoulIntegrity(sessionId, soulDef, behavior)
+  // where soulDef = { personality: string[], values: string[], style: string[] }
+  // and behavior = { responses: string[], decisions: string[], tone: string[] }
 
   analyzeSoulIntegrity(
     agentId: string,
-    soulPrompt: { personality: string[]; values: string[]; style: string },
-    observedBehavior: { responses: string[]; decisions: string[]; tone: string },
+    soulDefinition: { personality: string[]; values: string[]; style: string },
+    behavior: { responses: string[]; decisions: string[]; tone: string },
     sessionId?: string,
-  ): SoulIntegrityReport {
+  ): SoulIntegrityReport | null {
     const id = sessionId ?? this.activeSessionId;
-    if (!id) throw new Error('No active session');
-    const report = this.engine.analyzeSoulIntegrity(id, agentId, soulPrompt, observedBehavior);
-    if (report.overallScore < 80) {
-      this.eventBus.emit({
-        id: `evt_${Date.now()}`,
-        type: 'soul-drift-detected',
-        source: 'cipherclaw-cognitive-profiler',
-        target: agentId,
-        timestamp: Date.now(),
-        payload: { agentId, driftScore: 100 - report.overallScore },
-      });
+    if (!id) return null;
+    const report = this.engine.analyzeSoulIntegrity(id, agentId, soulDefinition, behavior);
+    if (report && report.overallScore < 80) {
+      this.eventBus.emit(evt('soul-drift-detected', 'cipherclaw-cognitive-profiler', report.agentId, { agentId: report.agentId, driftScore: 100 - report.overallScore }));
     }
     return report;
   }
 
-  // ─────────────────────────────────────────────────────────
-  // MEMORY HEALTH
-  // ─────────────────────────────────────────────────────────
+  // ── Memory Health ────────────────────────────────────────────────────────
 
   analyzeMemoryHealth(
     memoryState: Record<MemoryTier, { items: unknown[]; decayRates: number[]; retrievalHits: number; retrievalMisses: number }>,
     sessionId?: string,
-  ): MemoryHealthReport {
+  ): MemoryHealthReport | null {
     const id = sessionId ?? this.activeSessionId;
-    if (!id) throw new Error('No active session');
+    if (!id) return null;
     return this.engine.analyzeMemoryHealth(id, memoryState);
   }
 
-  // ─────────────────────────────────────────────────────────
-  // ANOMALY DETECTION
-  // ─────────────────────────────────────────────────────────
+  // ── Anomaly Detection ────────────────────────────────────────────────────
 
-  detectAnomalies(
-    spans: { id: string; name: string; durationMs: number }[],
-    sessionId?: string,
-  ): Anomaly[] {
+  detectAnomalies(spans: { id: string; name: string; durationMs: number }[], sessionId?: string): Anomaly[] {
     const id = sessionId ?? this.activeSessionId;
     if (!id) return [];
     const anomalies = this.engine.detectAnomalies(id, spans);
-    for (const anomaly of anomalies) {
-      this.eventBus.emit({
-        id: `evt_${Date.now()}`,
-        type: 'anomaly-detected',
-        source: 'cipherclaw-trace-analyst',
-        target: null,
-        timestamp: Date.now(),
-        payload: { anomalyId: anomaly.id, type: anomaly.type, severity: anomaly.severity },
-      });
+    for (const a of anomalies) {
+      this.eventBus.emit(evt('anomaly-detected', 'cipherclaw-trace-analyst', null, { anomalyId: a.id, type: a.type, severity: a.severity }));
     }
     return anomalies;
   }
 
-  // ─────────────────────────────────────────────────────────
-  // PREDICTIONS
-  // ─────────────────────────────────────────────────────────
+  // ── Predictions ──────────────────────────────────────────────────────────
 
   getPredictions(sessionId?: string): FailurePrediction[] {
     return this.engine.getPredictions(sessionId ?? this.activeSessionId ?? '');
   }
 
-  resolvePrediction(predictionId: string, sessionId?: string): void {
-    this.engine.resolvePrediction(sessionId ?? this.activeSessionId ?? '', predictionId);
+  resolvePrediction(predictionId: string, wasAccurate: boolean, sessionId?: string): void {
+    this.engine.resolvePrediction(sessionId ?? this.activeSessionId ?? '', predictionId, wasAccurate);
   }
 
-  // ─────────────────────────────────────────────────────────
-  // CROSS-DOMAIN CORRELATION
-  // ─────────────────────────────────────────────────────────
+  // ── Cross-Domain Correlation ─────────────────────────────────────────────
 
   detectCrossDomainCorrelations(sessionId?: string): CrossDomainCorrelation[] {
     return this.engine.detectCrossDomainCorrelations(sessionId ?? this.activeSessionId ?? '');
   }
 
-  // ─────────────────────────────────────────────────────────
-  // FLOW TESTS
-  // ─────────────────────────────────────────────────────────
+  // ── Flow Tests ───────────────────────────────────────────────────────────
 
   synthesizeFlowTest(traceId: string, sessionId?: string): FlowTest | null {
     return this.engine.synthesizeFlowTest(sessionId ?? this.activeSessionId ?? '', traceId);
@@ -296,14 +209,12 @@ export class CipherClawAdapter {
     return this.engine.runFlowTests(sessionId ?? this.activeSessionId ?? '', domain);
   }
 
-  // ─────────────────────────────────────────────────────────
-  // BREAKPOINTS
-  // ─────────────────────────────────────────────────────────
+  // ── Breakpoints ──────────────────────────────────────────────────────────
 
-  addBreakpoint(type: BreakpointType, condition?: string, metadata?: Record<string, unknown>, sessionId?: string): Breakpoint {
+  addBreakpoint(type: BreakpointType, condition?: string, metadata?: Record<string, unknown>, sessionId?: string): Breakpoint | null {
     const id = sessionId ?? this.activeSessionId;
-    if (!id) throw new Error('No active session');
-    return this.engine.addBreakpoint(id, type, condition, metadata);
+    if (!id) return null;
+    return this.engine.addBreakpoint(id, type, condition ?? '', metadata);
   }
 
   removeBreakpoint(breakpointId: string, sessionId?: string): void {
@@ -314,9 +225,7 @@ export class CipherClawAdapter {
     this.engine.toggleBreakpoint(sessionId ?? this.activeSessionId ?? '', breakpointId);
   }
 
-  // ─────────────────────────────────────────────────────────
-  // SNAPSHOTS & REPLAY
-  // ─────────────────────────────────────────────────────────
+  // ── Snapshots & Replay ───────────────────────────────────────────────────
 
   captureSnapshot(sessionId?: string): StateSnapshot | null {
     return this.engine.captureManualSnapshot(sessionId ?? this.activeSessionId ?? '');
@@ -330,48 +239,28 @@ export class CipherClawAdapter {
     return this.engine.replayToSnapshot(sessionId ?? this.activeSessionId ?? '', snapshotId);
   }
 
-  // ─────────────────────────────────────────────────────────
-  // HIERARCHY PROPAGATION
-  // ─────────────────────────────────────────────────────────
+  // ── Hierarchy Propagation ────────────────────────────────────────────────
 
-  propagateDebugEvent(event: {
-    sourceAgentId: string; sourceLevel: number;
-    targetAgentId: string; targetLevel: number;
-    direction: 'up' | 'down' | 'lateral';
-    eventType: 'error_escalation' | 'debug_request' | 'status_report' | 'intervention';
-    payload: Record<string, unknown>;
-    propagationPath: string[];
-  }, sessionId?: string) {
+  propagateDebugEvent(event: HierarchyDebugEvent, sessionId?: string): HierarchyDebugEvent {
     const id = sessionId ?? this.activeSessionId;
-    if (!id) throw new Error('No active session');
+    if (!id) return event;
     return this.engine.propagateDebugEvent(id, event);
   }
 
-  // ─────────────────────────────────────────────────────────
-  // REPORTS
-  // ─────────────────────────────────────────────────────────
+  // ── Reports ──────────────────────────────────────────────────────────────
 
   generateReport(sessionId?: string): VeronicaDebugReport | null {
     const id = sessionId ?? this.activeSessionId;
-    if (!id) throw new Error('No active session');
+    if (!id) return null;
     return this.engine.generateVeronicaReport(id);
   }
 
-  // ─────────────────────────────────────────────────────────
-  // SELF-DEBUG
-  // ─────────────────────────────────────────────────────────
+  // ── Self-Debug ───────────────────────────────────────────────────────────
 
-  selfDebug() {
-    return this.engine.selfDebug();
-  }
+  selfDebug() { return this.engine.selfDebug(); }
+  getSelfDebugLog() { return this.engine.getSelfDebugLog(); }
 
-  getSelfDebugLog() {
-    return this.engine.getSelfDebugLog();
-  }
-
-  // ─────────────────────────────────────────────────────────
-  // EVENTS
-  // ─────────────────────────────────────────────────────────
+  // ── Events ───────────────────────────────────────────────────────────────
 
   on(eventType: string, handler: EventHandler): () => void {
     return this.eventBus.on(eventType, handler);
@@ -381,38 +270,18 @@ export class CipherClawAdapter {
     return this.eventBus.on('*', handler);
   }
 
-  // ─────────────────────────────────────────────────────────
-  // CONFIGURATION
-  // ─────────────────────────────────────────────────────────
+  // ── Configuration ────────────────────────────────────────────────────────
 
-  getConfig() {
-    return this.engine.getConfig();
-  }
+  getConfig() { return this.engine.getConfig(); }
+  updateConfig(updates: Partial<CipherClawConfig>) { this.engine.updateConfig(updates); }
+  getStats() { return this.engine.getStats(); }
 
-  updateConfig(updates: Partial<CipherClawConfig>) {
-    this.engine.updateConfig(updates);
-  }
+  // ── Raw Engine Access ────────────────────────────────────────────────────
 
-  // ─────────────────────────────────────────────────────────
-  // STATISTICS
-  // ─────────────────────────────────────────────────────────
-
-  getStats() {
-    return this.engine.getStats();
-  }
-
-  // ─────────────────────────────────────────────────────────
-  // RAW ENGINE ACCESS (for advanced use)
-  // ─────────────────────────────────────────────────────────
-
-  getEngine(): CipherClawEngine {
-    return this.engine;
-  }
+  getEngine(): CipherClawEngine { return this.engine; }
 }
 
-// ═══════════════════════════════════════════════════════════════
-// FACTORY
-// ═══════════════════════════════════════════════════════════════
+// ── Factory ──────────────────────────────────────────────────────────────────
 
 export function createCipherClaw(config?: Partial<CipherClawConfig>): CipherClawAdapter {
   return new CipherClawAdapter(config);
