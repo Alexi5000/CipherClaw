@@ -2,27 +2,67 @@
   "name": "cipherclaw",
   "version": "1.0.0",
   "description": "An OpenClaw debug agent that traces causes, profiles behavior, and predicts failures in multi-agent systems.",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
   "type": "module",
+  "sideEffects": false,
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "types": "./dist/esm/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "default": "./dist/esm/index.js"
+    },
+    "./engine": {
+      "types": "./dist/esm/core/engine.d.ts",
+      "import": "./dist/esm/core/engine.js",
+      "require": "./dist/cjs/core/engine.js"
+    },
+    "./types": {
+      "types": "./dist/esm/types/index.d.ts",
+      "import": "./dist/esm/types/index.js",
+      "require": "./dist/cjs/types/index.js"
+    },
+    "./openclaw": {
+      "types": "./dist/esm/openclaw/adapter.d.ts",
+      "import": "./dist/esm/openclaw/adapter.js",
+      "require": "./dist/cjs/openclaw/adapter.js"
+    },
+    "./manifest": {
+      "types": "./dist/esm/openclaw/manifest.d.ts",
+      "import": "./dist/esm/openclaw/manifest.js",
+      "require": "./dist/cjs/openclaw/manifest.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "engine": ["dist/esm/core/engine.d.ts"],
+      "types": ["dist/esm/types/index.d.ts"],
+      "openclaw": ["dist/esm/openclaw/adapter.d.ts"],
+      "manifest": ["dist/esm/openclaw/manifest.d.ts"]
     }
   },
   "files": [
     "dist",
     "skills",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "CHANGELOG.md"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "pnpm build:esm && pnpm build:cjs && pnpm build:fixcjs",
+    "build:esm": "tsc -p tsconfig.json",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:fixcjs": "node scripts/fix-cjs-package.js",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "lint": "tsc --noEmit",
+    "prepublishOnly": "pnpm test && pnpm build",
+    "clean": "rm -rf dist",
+    "prepack": "pnpm clean && pnpm build"
   },
   "keywords": [
     "openclaw",
@@ -33,9 +73,12 @@
     "tracing",
     "causal-inference",
     "cognitive-fingerprinting",
-    "cipherclaw"
+    "cipherclaw",
+    "agentic-ai",
+    "debugging",
+    "autonomous-agent"
   ],
-  "author": "ClawLI.AI",
+  "author": "ClawLI.AI <hello@clawli.ai> (https://clawli.ai)",
   "license": "Apache-2.0",
   "homepage": "https://cipherclaw.com",
   "repository": {
@@ -45,8 +88,16 @@
   "bugs": {
     "url": "https://github.com/Alexi5000/CipherClaw/issues"
   },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/Alexi5000"
+  },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
     "typescript": "^5.4.0",
