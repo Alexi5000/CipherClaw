@@ -1,0 +1,27 @@
+graph LR
+    subgraph "Causal Debug Graph (Patent Claim 1)"
+        direction LR
+        S1["Span: Agent Init<br/>✅ OK 120ms"]
+        S2["Span: Plan Task<br/>✅ OK 340ms"]
+        S3["Span: Tool Call<br/>⚠️ WARN 890ms"]
+        S4["Span: Memory Write<br/>❌ ERROR 45ms"]
+        S5["Span: Retry<br/>❌ ERROR 12ms"]
+        S6["Span: Escalation<br/>⚠️ WARN 200ms"]
+
+        S1 -->|"control_flow"| S2
+        S2 -->|"control_flow"| S3
+        S3 -->|"data_dependency"| S4
+        S4 -->|"error_propagation"| S5
+        S5 -->|"error_propagation"| S6
+
+        RC["🎯 Root Cause<br/>Memory Write Failed<br/>P=0.87"]
+        S4 -.->|"identified as"| RC
+    end
+
+    style S1 fill:#2ecc71,stroke:#333,color:#fff
+    style S2 fill:#2ecc71,stroke:#333,color:#fff
+    style S3 fill:#f39c12,stroke:#333,color:#fff
+    style S4 fill:#e74c3c,stroke:#333,color:#fff
+    style S5 fill:#e74c3c,stroke:#333,color:#fff
+    style S6 fill:#f39c12,stroke:#333,color:#fff
+    style RC fill:#9b59b6,stroke:#333,color:#fff

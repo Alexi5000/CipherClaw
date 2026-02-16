@@ -1,0 +1,80 @@
+graph TB
+    subgraph "ClawLI.AI Platform"
+        V["🧠 Veronica<br/>Sovereign AI"]
+        R["🌹 Rose<br/>Shaman Orchestrator"]
+        P["👻 Phantom<br/>Debug Orchestrator"]
+        V --> R
+        V --> P
+    end
+
+    subgraph "CipherClaw Debug Engine"
+        direction TB
+        TA["🔍 Trace Analyst"]
+        EC["⚡ Error Classifier"]
+        CP["🧬 Cognitive Profiler"]
+        FT["🧪 Flow Tester"]
+        P --> TA
+        P --> EC
+        P --> CP
+        P --> FT
+    end
+
+    subgraph "10 Patent Claims"
+        direction TB
+        C1["1. Causal Debug Graph"]
+        C2["2. Cognitive Fingerprinting"]
+        C3["3. Hierarchy Propagation"]
+        C4["4. Memory Tier Debug"]
+        C5["5. Predictive Failure"]
+        C6["6. Soul Integrity"]
+        C7["7. Cross-Domain Correlation"]
+        C8["8. Self-Debugging Loop"]
+        C9["9. Flow Test Synthesis"]
+        C10["10. Anomaly Cascades"]
+    end
+
+    TA --> C1
+    TA --> C10
+    EC --> C5
+    EC --> C7
+    CP --> C2
+    CP --> C6
+    CP --> C4
+    FT --> C9
+    P --> C3
+    P --> C8
+
+    subgraph "Debug Domains"
+        D1["🤖 Agent<br/>Command Center"]
+        D2["📊 CRM<br/>Pipeline"]
+        D3["📝 Content<br/>Social Media"]
+        D4["💾 Memory<br/>System"]
+    end
+
+    C1 --> D1
+    C1 --> D2
+    C1 --> D3
+    C7 --> D1
+    C7 --> D2
+    C7 --> D3
+    C4 --> D4
+
+    subgraph "Output"
+        REP["📋 Veronica Report"]
+        BP["🔴 Breakpoints"]
+        SS["📸 Snapshots"]
+        PRED["🔮 Predictions"]
+    end
+
+    C1 --> REP
+    C5 --> PRED
+    C8 --> BP
+    C8 --> SS
+
+    style V fill:#ff6b6b,stroke:#333,color:#fff
+    style P fill:#9b59b6,stroke:#333,color:#fff
+    style R fill:#e74c3c,stroke:#333,color:#fff
+    style TA fill:#3498db,stroke:#333,color:#fff
+    style EC fill:#e67e22,stroke:#333,color:#fff
+    style CP fill:#2ecc71,stroke:#333,color:#fff
+    style FT fill:#1abc9c,stroke:#333,color:#fff

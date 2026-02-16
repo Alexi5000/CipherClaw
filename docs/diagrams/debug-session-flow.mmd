@@ -1,0 +1,58 @@
+sequenceDiagram
+    participant U as User/Veronica
+    participant P as Phantom (Orchestrator)
+    participant TA as Trace Analyst
+    participant EC as Error Classifier
+    participant CP as Cognitive Profiler
+    participant FT as Flow Tester
+    participant DB as Supabase
+
+    U->>P: Start Debug Session
+    P->>DB: Create Session Record
+    P-->>U: Session ID
+
+    Note over P: Hunting Mode Active
+
+    loop Trace Ingestion
+        U->>P: Ingest Trace/Span
+        P->>TA: Analyze Trace
+        TA->>TA: Build Causal Graph
+        TA->>TA: Detect Anomalies
+        TA->>TA: Detect Cascades
+
+        alt Error Detected
+            TA->>EC: Classify Error
+            EC->>EC: Pattern Match
+            EC->>EC: Root Cause Analysis
+            EC-->>P: ClassifiedError
+        end
+
+        alt Breakpoint Hit
+            P->>P: Capture Snapshot
+            P-->>U: Breakpoint Triggered
+        end
+
+        alt Anomaly Detected
+            TA-->>P: Anomaly Alert
+            P->>P: Run Predictions
+            P-->>U: Prediction Warning
+        end
+    end
+
+    U->>P: Request Analysis
+    P->>CP: Compute Fingerprints
+    CP->>CP: Cognitive Metrics
+    CP->>CP: Soul Integrity Check
+    CP->>CP: Memory Health Check
+    CP-->>P: Cognitive Report
+
+    P->>FT: Run Flow Tests
+    FT->>FT: Execute Test Steps
+    FT-->>P: Test Results
+
+    P->>P: Cross-Domain Correlation
+    P->>P: Generate Veronica Report
+    P->>DB: Persist Report
+    P-->>U: VeronicaDebugReport
+
+    Note over P: Session Complete
