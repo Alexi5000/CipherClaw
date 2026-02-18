@@ -12,7 +12,7 @@ A clear description of the change.
 
 ## Checklist
 
-- [ ] `pnpm test` passes (154+ tests)
+- [ ] `pnpm test` passes (206 tests)
 - [ ] `pnpm typecheck` passes (zero errors)
 - [ ] New code has tests
 - [ ] Documentation updated if needed

@@ -2,6 +2,16 @@
 
 All notable changes to CipherClaw are documented here. Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.0.3] — 2026-02-18
+
+### Changed
+- Elevated README to world-class open-source standard with banner, badges, and OpenClaw ecosystem branding
+- Moved CI workflow from repo root to `.github/workflows/ci.yml` (GitHub Actions now auto-discovers it)
+- Updated PR template test count from 154 to 206
+- Updated CONTRIBUTING.md to reflect current code style guidelines
+- Added `*.tsbuildinfo` and IDE files to `.gitignore`
+- Consistent branding: "Clawli AI" and "OpenClaw Ecosystem" throughout
+
 ## [1.0.2] — 2026-02-16
 
 ### Changed
@@ -47,6 +57,7 @@ All notable changes to CipherClaw are documented here. Format based on [Keep a C
 - OpenClaw skill manifest, event bus adapter, and SKILL.md
 - 154 tests — zero mocks, zero stubs
 
+[1.0.3]: https://github.com/Alexi5000/CipherClaw/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/Alexi5000/CipherClaw/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/Alexi5000/CipherClaw/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/Alexi5000/CipherClaw/releases/tag/v1.0.0

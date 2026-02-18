@@ -1,6 +1,6 @@
 {
   "name": "cipherclaw",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Zero-dependency AI agent debugging toolkit. Causal analysis, cognitive fingerprinting, anomaly detection, and soul integrity monitoring.",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",

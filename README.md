@@ -1,12 +1,13 @@
 <p align="center">
-  <img src="docs/assets/cipherclaw-logo.png" alt="CipherClaw" width="240" />
+  <img src="docs/assets/cipherclaw-banner.png" alt="CipherClaw — The World's First OpenClaw Bug Hunter AI Agent" width="100%" />
 </p>
 
 <h1 align="center">CipherClaw</h1>
 
 <p align="center">
-  <strong>An OpenClaw debug agent that actually understands your agent system.</strong><br/>
-  <em>Drop it into any OpenClaw swarm. It finds bugs, traces causes, and predicts failures.</em>
+  <strong>The World's First OpenClaw Bug Hunter AI Agent</strong><br/>
+  <em>An open-source, AI-powered security agent that hunts down vulnerabilities in your code.</em><br/>
+  <sub>Originally built for <a href="https://clawli.ai">Clawli AI</a>. Released as open source for the <a href="https://openclaw.ai">OpenClaw Ecosystem</a>.</sub>
 </p>
 
 <p align="center">
@@ -15,13 +16,16 @@
   <a href="#openclaw-skill">OpenClaw Skill</a> ·
   <a href="#api-reference">API Reference</a> ·
   <a href="docs/ARCHITECTURE.md">Architecture</a> ·
+  <a href="docs/INNOVATIONS.md">Innovations</a> ·
   <a href="CONTRIBUTING.md">Contributing</a>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/tests-206_passing-22c55e?style=flat-square" alt="Tests" />
-  <img src="https://img.shields.io/badge/license-Apache_2.0-blue?style=flat-square" alt="License" />
-  <img src="https://img.shields.io/badge/TypeScript-5.x-3178c6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
+  <a href="https://github.com/Alexi5000/CipherClaw/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/Alexi5000/CipherClaw/ci.yml?branch=main&style=flat-square&label=CI" alt="CI" /></a>
+  <a href="https://www.npmjs.com/package/cipherclaw"><img src="https://img.shields.io/npm/v/cipherclaw?style=flat-square&color=brightgreen" alt="npm" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue?style=flat-square" alt="License" /></a>
+  <img src="https://img.shields.io/badge/tests-206%20passing-22c55e?style=flat-square" alt="Tests" />
+  <img src="https://img.shields.io/badge/TypeScript-strict-3178c6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript Strict" />
   <img src="https://img.shields.io/badge/OpenClaw-compatible-00b894?style=flat-square" alt="OpenClaw" />
   <img src="https://img.shields.io/badge/dependencies-zero-a78bfa?style=flat-square" alt="Zero Dependencies" />
 </p>
@@ -403,6 +407,7 @@ Some approaches in this project represent novel work. See [INNOVATIONS.md](docs/
 </p>
 
 <p align="center">
-  <strong>Built by <a href="https://clawli.ai">ClawLI.AI</a></strong><br/>
+  <strong>Built by <a href="https://clawli.ai">Clawli AI</a></strong><br/>
+  <sub>Released as open source for the <a href="https://openclaw.ai">OpenClaw Ecosystem</a></sub><br/>
   <sub>CipherClaw — zero-dependency AI agent debugging toolkit</sub>
 </p>

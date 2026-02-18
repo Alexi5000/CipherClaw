@@ -40,7 +40,7 @@ All 206 tests should pass. If they don't, open an issue.
 CipherClaw is written in TypeScript with strict mode enabled. A few guidelines:
 
 - Zero `any` types in the public API. Internal use is acceptable when genuinely needed.
-- Every public method should have a JSDoc comment.
+- Brief comments on non-obvious logic only. No verbose JSDoc.
 - New capabilities need tests. Not "a test" — tests that cover the happy path, edge cases, and error conditions.
 - No runtime dependencies. CipherClaw is zero-dependency by design.
 
@@ -54,7 +54,7 @@ CipherClaw uses a modular architecture. Each capability lives in its own file un
 4. **OpenClaw tools** are registered in `src/openclaw/manifest.ts`
 5. **Adapter methods** are added to `src/openclaw/adapter.ts`
 6. **Exports** are added to `src/index.ts`
-7. **Soul files** live in `skills/cipherclaw/` (SOUL.md, IDENTITY.md, AGENTS.md)
+7. **Soul files** live in `skills/cipherclaw/` (SKILL.md, SOUL.md)
 
 This follows the OpenClaw skill and agent architecture. Keep things modular.
 
