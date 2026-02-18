@@ -13,8 +13,10 @@
 <p align="center">
   <a href="#quick-start">Quick Start</a> ·
   <a href="#what-it-does">What It Does</a> ·
+  <a href="#how-it-works">How It Works</a> ·
   <a href="#openclaw-skill">OpenClaw Skill</a> ·
   <a href="#api-reference">API Reference</a> ·
+  <a href="#tests">Tests</a> ·
   <a href="docs/ARCHITECTURE.md">Architecture</a> ·
   <a href="docs/INNOVATIONS.md">Innovations</a> ·
   <a href="CONTRIBUTING.md">Contributing</a>
@@ -22,7 +24,7 @@
 
 <p align="center">
   <a href="https://github.com/Alexi5000/CipherClaw/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/Alexi5000/CipherClaw/ci.yml?branch=main&style=flat-square&label=CI" alt="CI" /></a>
-  <a href="https://www.npmjs.com/package/cipherclaw"><img src="https://img.shields.io/npm/v/cipherclaw?style=flat-square&color=brightgreen" alt="npm" /></a>
+  <a href="https://github.com/Alexi5000/CipherClaw/releases"><img src="https://img.shields.io/github/v/release/Alexi5000/CipherClaw?style=flat-square&color=brightgreen&label=release" alt="Release" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue?style=flat-square" alt="License" /></a>
   <img src="https://img.shields.io/badge/tests-206%20passing-22c55e?style=flat-square" alt="Tests" />
   <img src="https://img.shields.io/badge/TypeScript-strict-3178c6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript Strict" />
