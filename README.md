@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/assets/cipherclaw-banner.png" alt="CipherClaw — An OpenClaw Debugging & Observability Skill" width="100%" />
+  <img src="docs/assets/cipherclaw-banner.jpg" alt="CipherClaw — An OpenClaw Debugging & Observability Skill" width="100%" />
 </p>
 
 <h1 align="center">CipherClaw</h1>
@@ -410,7 +410,7 @@ Some approaches in this project represent novel work. See [INNOVATIONS.md](docs/
 ---
 
 <p align="center">
-  <img src="docs/assets/cipherclaw-logo.png" alt="CipherClaw" width="64" />
+  <img src="docs/assets/cipherclaw-logo.jpg" alt="CipherClaw" width="64" />
 </p>
 
 <p align="center">
