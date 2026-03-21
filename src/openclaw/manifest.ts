@@ -279,7 +279,7 @@ export const CIPHERCLAW_EVENTS: CipherClawEventDef[] = [
 
 export const CIPHERCLAW_MANIFEST: CipherClawCapabilityManifest = {
   name: 'cipherclaw',
-  version: '1.0.3',
+  version: '1.1.0',
   description: 'Zero-dependency AI agent debugging toolkit. Causal analysis, cognitive fingerprinting, predictive failure detection, soul integrity monitoring, and cross-domain correlation.',
   author: 'Clawli AI',
   license: 'Apache-2.0',

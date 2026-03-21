@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>An OpenClaw Debugging & Observability Skill</strong><br/>
-  <em>An open-source, AI-powered debugging toolkit that traces root causes, profiles agent behavior, and predicts failures in multi-agent systems.</em><br/>
+  <em>An open-source debugging toolkit that traces root causes, profiles agent behavior, and predicts failures in multi-agent systems.</em><br/>
   <sub>Originally built for <a href="https://clawli.ai">Clawli AI</a>. Released as open source for the <a href="https://openclaw.ai">OpenClaw Ecosystem</a>.</sub>
 </p>
 
@@ -380,8 +380,7 @@ CipherClaw/
 │   └── cipherclaw/
 │       ├── SKILL.md          # OpenClaw skill definition
 │       └── SOUL.md           # Phantom agent soul
-├── AGENTS.md                 # build/test/lint instructions
-├── CLAUDE.md                 # symlink → AGENTS.md
+├── CONTRIBUTING.md
 └── src/__tests__/            # 206 tests
 ```
 
