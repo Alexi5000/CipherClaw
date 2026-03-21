@@ -20,4 +20,5 @@ export * from './breakpoints.js';
 export * from './snapshots.js';
 export * from './report-generator.js';
 export * from './flow-runner.js';
+export * from './otel-converter.js';
 export { CipherClawEngine } from './engine.js';

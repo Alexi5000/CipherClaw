@@ -370,7 +370,6 @@ describe('E2E: Manifest and Configuration', () => {
     const manifest = adapter.getManifest();
 
     expect(manifest.name).toBe('cipherclaw');
-    expect(manifest.agents.length).toBe(5);
     expect(manifest.skills.length).toBe(10);
     expect(manifest.tools.length).toBe(14);
     expect(manifest.events.length).toBe(12);
@@ -1559,22 +1558,22 @@ describe('E2E: Anomaly Detection — No Anomalies', () => {
 // E2E 46: MANIFEST AGENTS STRUCTURE
 // ═══════════════════════════════════════════════════════════════
 
-describe('E2E: Manifest Agents Structure', () => {
-  it('each manifest agent has required fields', () => {
+describe('E2E: Manifest Skills Structure (replaces agents)', () => {
+  it('each manifest skill has required capability fields', () => {
     const adapter = createCipherClaw();
     const manifest = adapter.getManifest();
 
-    manifest.agents.forEach(agent => {
-      expect(agent.id).toBeDefined();
-      expect(agent.name).toBeDefined();
-      expect(agent.tier).toBeDefined();
-      expect(agent.team).toBeDefined();
+    manifest.skills.forEach(skill => {
+      expect(skill.id).toBeDefined();
+      expect(skill.name).toBeDefined();
+      expect(skill.category).toBeDefined();
+      expect(skill.requiredTools.length).toBeGreaterThan(0);
     });
 
-    // Phantom should be the orchestrator
-    const phantom = manifest.agents.find(a => a.id === 'cipherclaw-phantom');
-    expect(phantom).toBeDefined();
-    expect(phantom!.tier).toBe('orchestrator');
+    // Debug orchestration should exist
+    const orchestration = manifest.skills.find(s => s.id === 'debug-orchestration');
+    expect(orchestration).toBeDefined();
+    expect(orchestration!.category).toBe('orchestration');
   });
 });
 
@@ -1747,7 +1746,6 @@ describe('E2E: OpenClaw Interop — Manifest Round-Trip', () => {
 
     expect(deserialized.name).toBe(manifest.name);
     expect(deserialized.version).toBe(manifest.version);
-    expect(deserialized.agents.length).toBe(manifest.agents.length);
     expect(deserialized.skills.length).toBe(manifest.skills.length);
     expect(deserialized.tools.length).toBe(manifest.tools.length);
     expect(deserialized.events.length).toBe(manifest.events.length);

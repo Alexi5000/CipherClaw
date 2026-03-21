@@ -5,9 +5,12 @@ dist/
 coverage/
 *.log
 *.tsbuildinfo
+*.tgz
 .DS_Store
 Thumbs.db
 .vscode/
 .idea/
+.npmrc
 *.swp
 *.swo
+AGENTS.md

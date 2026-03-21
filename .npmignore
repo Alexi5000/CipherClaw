@@ -1,0 +1,18 @@
+# Source & dev tooling — not needed by consumers
+src/
+scripts/
+docs/
+examples/
+.github/
+.gitignore
+.npmignore
+AGENTS.md
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+SECURITY.md
+tsconfig.json
+tsconfig.cjs.json
+vitest.config.ts
+pnpm-lock.yaml
+*.tgz
+coverage/

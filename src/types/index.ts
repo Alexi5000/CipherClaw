@@ -481,7 +481,7 @@ export interface CipherClawConfig {
   autoPredictFailures: boolean;
   enableSelfDebug: boolean;
   enableHierarchyPropagation: boolean;
-  persistToSupabase: boolean;
+
 }
 
 export const DEFAULT_CONFIG: CipherClawConfig = {
@@ -500,5 +500,5 @@ export const DEFAULT_CONFIG: CipherClawConfig = {
   autoPredictFailures: true,
   enableSelfDebug: true,
   enableHierarchyPropagation: true,
-  persistToSupabase: true,
+
 };

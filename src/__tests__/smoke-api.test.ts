@@ -68,13 +68,11 @@ describe('Smoke: Exported Constants', () => {
     expect(DEFAULT_CONFIG.anomalyThresholdStdDev).toBeDefined();
     expect(DEFAULT_CONFIG.enableSelfDebug).toBeDefined();
     expect(DEFAULT_CONFIG.enableHierarchyPropagation).toBeDefined();
-    expect(DEFAULT_CONFIG.persistToSupabase).toBeDefined();
   });
 
   it('CIPHERCLAW_MANIFEST has valid structure', () => {
     expect(CIPHERCLAW_MANIFEST.name).toBe('cipherclaw');
     expect(CIPHERCLAW_MANIFEST.version).toBeDefined();
-    expect(Array.isArray(CIPHERCLAW_MANIFEST.agents)).toBe(true);
     expect(Array.isArray(CIPHERCLAW_MANIFEST.skills)).toBe(true);
     expect(Array.isArray(CIPHERCLAW_MANIFEST.tools)).toBe(true);
     expect(Array.isArray(CIPHERCLAW_MANIFEST.events)).toBe(true);

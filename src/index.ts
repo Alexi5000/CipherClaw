@@ -44,15 +44,17 @@ export { addBreakpoint, removeBreakpoint, toggleBreakpoint, checkBreakpoints } f
 export { captureSnapshot, captureManualSnapshot, getSnapshots, replayToSnapshot } from './core/snapshots.js';
 export { synthesizeFlowTest, runFlowTests } from './core/flow-runner.js';
 export { generateVeronicaReport } from './core/report-generator.js';
+export { convertOtlpSpan, convertOtlpTrace, OtlpStatusCode } from './core/otel-converter.js';
+export type { OtlpSpan, OtlpSpanEvent, OtlpAttribute } from './core/otel-converter.js';
 
 // ── OpenClaw Adapter ────────────────────────────────────────────────────────
 export { CipherClawAdapter, createCipherClaw } from './openclaw/adapter.js';
 export type { EventHandler } from './openclaw/adapter.js';
 
-// ── OpenClaw Manifest ───────────────────────────────────────────────────────
+// ── Internal Capability Metadata ────────────────────────────────────────────
+// Note: The OpenClaw plugin manifest is openclaw.plugin.json at the repo root.
 export {
   CIPHERCLAW_MANIFEST,
-  CIPHERCLAW_AGENTS,
   CIPHERCLAW_SKILLS,
   CIPHERCLAW_TOOLS,
   CIPHERCLAW_EVENTS,

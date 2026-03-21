@@ -1,0 +1,23 @@
+{
+  "id": "cipherclaw",
+  "name": "CipherClaw",
+  "description": "Zero-dependency AI agent debugging toolkit. Causal analysis, cognitive fingerprinting, anomaly detection, predictive failure, and soul integrity monitoring.",
+  "version": "1.1.0",
+  "author": "ClawLI.AI <hello@clawli.ai>",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/Alexi5000/CipherClaw",
+  "repository": "https://github.com/Alexi5000/CipherClaw",
+  "configSchema": {
+    "type": "object",
+    "properties": {
+      "maxTraces": { "type": "number", "default": 10000, "description": "Maximum traces per session" },
+      "anomalyThresholdStdDev": { "type": "number", "default": 2.5, "description": "Standard deviations for anomaly detection" },
+      "cascadeWindowMs": { "type": "number", "default": 30000, "description": "Time window for cascade detection (ms)" },
+      "soulDriftThreshold": { "type": "number", "default": 15, "description": "Threshold for soul drift alerts (0-100)" },
+      "enableSelfDebug": { "type": "boolean", "default": true, "description": "Enable self-debugging loop" },
+      "enableHierarchyPropagation": { "type": "boolean", "default": true, "description": "Enable hierarchy debug propagation" }
+    },
+    "additionalProperties": false
+  },
+  "skills": ["skills/cipherclaw"]
+}

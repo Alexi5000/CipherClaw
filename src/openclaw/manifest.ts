@@ -1,12 +1,18 @@
-// CipherClaw — OpenClaw skill manifest and agent definitions.
-
-import type { OpenClawAgentDef } from '../types/index.js';
+// CipherClaw — Internal capability metadata for programmatic consumers.
+//
+// ⚠️  THIS IS NOT THE OPENCLAW PLUGIN MANIFEST.
+// The OpenClaw plugin manifest is `openclaw.plugin.json` at the repository root.
+// This file provides structured metadata about CipherClaw's skills, tools,
+// events, and configuration for programmatic consumers (e.g. tooling, docs
+// generators, or adapter integrations).
+//
+// CipherClaw makes ZERO LLM calls. There are no agent model definitions here.
 
 // ═══════════════════════════════════════════════════════════════
-// OPENCLAW SKILL MANIFEST
+// INTERNAL CAPABILITY METADATA
 // ═══════════════════════════════════════════════════════════════
 
-export interface OpenClawSkillManifest {
+export interface CipherClawCapabilityManifest {
   name: string;
   version: string;
   description: string;
@@ -17,14 +23,13 @@ export interface OpenClawSkillManifest {
   category: string;
   tags: string[];
   compatibility: { openclaw: string; node: string };
-  agents: OpenClawAgentDef[];
-  skills: OpenClawSkillDef[];
-  tools: OpenClawToolDef[];
-  events: OpenClawEventDef[];
-  configuration: OpenClawConfigDef[];
+  skills: CipherClawSkillDef[];
+  tools: CipherClawToolDef[];
+  events: CipherClawEventDef[];
+  configuration: CipherClawConfigDef[];
 }
 
-export interface OpenClawSkillDef {
+export interface CipherClawSkillDef {
   id: string;
   name: string;
   description: string;
@@ -33,7 +38,7 @@ export interface OpenClawSkillDef {
   providedCapabilities: string[];
 }
 
-export interface OpenClawToolDef {
+export interface CipherClawToolDef {
   id: string;
   name: string;
   description: string;
@@ -41,7 +46,7 @@ export interface OpenClawToolDef {
   outputSchema: Record<string, unknown>;
 }
 
-export interface OpenClawEventDef {
+export interface CipherClawEventDef {
   id: string;
   name: string;
   description: string;
@@ -49,7 +54,7 @@ export interface OpenClawEventDef {
   direction: 'emit' | 'listen' | 'both';
 }
 
-export interface OpenClawConfigDef {
+export interface CipherClawConfigDef {
   key: string;
   type: string;
   default: unknown;
@@ -58,122 +63,10 @@ export interface OpenClawConfigDef {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// CIPHERCLAW AGENT DEFINITIONS
+// SKILL DEFINITIONS
 // ═══════════════════════════════════════════════════════════════
 
-export const CIPHERCLAW_AGENTS: OpenClawAgentDef[] = [
-  {
-    id: 'cipherclaw-phantom',
-    name: 'Phantom',
-    tier: 'orchestrator',
-    team: 'debug',
-    parentId: 'veronica',
-    skills: [
-      'debug-orchestration', 'causal-analysis', 'predictive-failure',
-      'cross-domain-correlation', 'self-debugging', 'report-generation',
-    ],
-    tools: [
-      'start-debug-session', 'analyze-traces', 'generate-report',
-      'predict-failures', 'correlate-domains', 'self-diagnose',
-    ],
-    model: { provider: 'openai', model: 'gpt-4.1-mini' },
-    soul: {
-      personality: ['meticulous', 'relentless', 'analytical', 'vigilant'],
-      values: ['accuracy', 'thoroughness', 'zero-tolerance-for-bugs'],
-      style: 'precise and technical, like a forensic investigator',
-    },
-  },
-  {
-    id: 'cipherclaw-trace-analyst',
-    name: 'Trace Analyst',
-    tier: 'specialist',
-    team: 'debug',
-    parentId: 'cipherclaw-phantom',
-    skills: [
-      'trace-analysis', 'causal-graph-building', 'anomaly-detection',
-      'temporal-cascade-detection', 'latency-profiling',
-    ],
-    tools: [
-      'ingest-trace', 'build-causal-graph', 'detect-anomalies',
-      'detect-cascades', 'profile-latency',
-    ],
-    model: { provider: 'openai', model: 'gpt-4.1-nano' },
-    soul: {
-      personality: ['detail-oriented', 'pattern-seeking', 'systematic'],
-      values: ['data-integrity', 'completeness'],
-      style: 'data-driven and precise',
-    },
-  },
-  {
-    id: 'cipherclaw-error-classifier',
-    name: 'Error Classifier',
-    tier: 'specialist',
-    team: 'debug',
-    parentId: 'cipherclaw-phantom',
-    skills: [
-      'error-classification', 'root-cause-analysis', 'fix-suggestion',
-      'recoverability-assessment', 'error-pattern-matching',
-    ],
-    tools: [
-      'classify-error', 'find-root-cause', 'suggest-fix',
-      'assess-recoverability', 'match-patterns',
-    ],
-    model: { provider: 'openai', model: 'gpt-4.1-nano' },
-    soul: {
-      personality: ['diagnostic', 'methodical', 'solution-oriented'],
-      values: ['accuracy', 'actionability'],
-      style: 'clinical and prescriptive',
-    },
-  },
-  {
-    id: 'cipherclaw-cognitive-profiler',
-    name: 'Cognitive Profiler',
-    tier: 'specialist',
-    team: 'debug',
-    parentId: 'cipherclaw-phantom',
-    skills: [
-      'cognitive-fingerprinting', 'soul-integrity-monitoring',
-      'behavioral-drift-detection', 'memory-health-analysis',
-    ],
-    tools: [
-      'compute-fingerprint', 'analyze-soul-integrity',
-      'detect-drift', 'analyze-memory-health',
-    ],
-    model: { provider: 'openai', model: 'gpt-4.1-mini' },
-    soul: {
-      personality: ['empathetic', 'observant', 'psychologically-aware'],
-      values: ['agent-wellbeing', 'behavioral-consistency'],
-      style: 'thoughtful and nuanced',
-    },
-  },
-  {
-    id: 'cipherclaw-flow-tester',
-    name: 'Flow Tester',
-    tier: 'worker',
-    team: 'debug',
-    parentId: 'cipherclaw-phantom',
-    skills: [
-      'flow-test-synthesis', 'flow-test-execution',
-      'coverage-analysis', 'regression-detection',
-    ],
-    tools: [
-      'synthesize-flow-test', 'run-flow-tests',
-      'analyze-coverage', 'detect-regressions',
-    ],
-    model: { provider: 'openai', model: 'gpt-4.1-nano' },
-    soul: {
-      personality: ['thorough', 'persistent', 'quality-focused'],
-      values: ['coverage', 'reliability'],
-      style: 'structured and report-oriented',
-    },
-  },
-];
-
-// ═══════════════════════════════════════════════════════════════
-// CIPHERCLAW SKILL DEFINITIONS
-// ═══════════════════════════════════════════════════════════════
-
-export const CIPHERCLAW_SKILLS: OpenClawSkillDef[] = [
+export const CIPHERCLAW_SKILLS: CipherClawSkillDef[] = [
   {
     id: 'debug-orchestration',
     name: 'Debug Orchestration',
@@ -257,10 +150,10 @@ export const CIPHERCLAW_SKILLS: OpenClawSkillDef[] = [
 ];
 
 // ═══════════════════════════════════════════════════════════════
-// CIPHERCLAW TOOL DEFINITIONS
+// TOOL DEFINITIONS
 // ═══════════════════════════════════════════════════════════════
 
-export const CIPHERCLAW_TOOLS: OpenClawToolDef[] = [
+export const CIPHERCLAW_TOOLS: CipherClawToolDef[] = [
   {
     id: 'start-debug-session',
     name: 'Start Debug Session',
@@ -362,10 +255,10 @@ export const CIPHERCLAW_TOOLS: OpenClawToolDef[] = [
 ];
 
 // ═══════════════════════════════════════════════════════════════
-// CIPHERCLAW EVENT DEFINITIONS
+// EVENT DEFINITIONS
 // ═══════════════════════════════════════════════════════════════
 
-export const CIPHERCLAW_EVENTS: OpenClawEventDef[] = [
+export const CIPHERCLAW_EVENTS: CipherClawEventDef[] = [
   { id: 'session-started', name: 'Debug Session Started', description: 'Emitted when a new debug session begins', payload: { sessionId: 'string', domain: 'string' }, direction: 'emit' },
   { id: 'session-completed', name: 'Debug Session Completed', description: 'Emitted when a debug session completes', payload: { sessionId: 'string', healthScore: 'number' }, direction: 'emit' },
   { id: 'error-classified', name: 'Error Classified', description: 'Emitted when an error is classified', payload: { errorId: 'string', module: 'string', severity: 'string' }, direction: 'emit' },
@@ -381,10 +274,10 @@ export const CIPHERCLAW_EVENTS: OpenClawEventDef[] = [
 ];
 
 // ═══════════════════════════════════════════════════════════════
-// FULL MANIFEST
+// FULL CAPABILITY MANIFEST
 // ═══════════════════════════════════════════════════════════════
 
-export const CIPHERCLAW_MANIFEST: OpenClawSkillManifest = {
+export const CIPHERCLAW_MANIFEST: CipherClawCapabilityManifest = {
   name: 'cipherclaw',
   version: '1.0.3',
   description: 'Zero-dependency AI agent debugging toolkit. Causal analysis, cognitive fingerprinting, predictive failure detection, soul integrity monitoring, and cross-domain correlation.',
@@ -395,7 +288,6 @@ export const CIPHERCLAW_MANIFEST: OpenClawSkillManifest = {
   category: 'debugging',
   tags: ['debugging', 'observability', 'tracing', 'ai-agents', 'openclaw', 'causal-analysis', 'predictive', 'cognitive-fingerprinting'],
   compatibility: { openclaw: '>=1.0.0', node: '>=18.0.0' },
-  agents: CIPHERCLAW_AGENTS,
   skills: CIPHERCLAW_SKILLS,
   tools: CIPHERCLAW_TOOLS,
   events: CIPHERCLAW_EVENTS,
@@ -406,6 +298,5 @@ export const CIPHERCLAW_MANIFEST: OpenClawSkillManifest = {
     { key: 'soulDriftThreshold', type: 'number', default: 15, description: 'Threshold for soul drift alerts', required: false },
     { key: 'enableSelfDebug', type: 'boolean', default: true, description: 'Enable self-debugging loop', required: false },
     { key: 'enableHierarchyPropagation', type: 'boolean', default: true, description: 'Enable hierarchy debug propagation', required: false },
-    { key: 'persistToSupabase', type: 'boolean', default: true, description: 'Persist debug data to Supabase', required: false },
   ],
 };

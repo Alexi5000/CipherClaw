@@ -1,6 +1,6 @@
 {
   "name": "cipherclaw",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Zero-dependency AI agent debugging toolkit. Causal analysis, cognitive fingerprinting, anomaly detection, and soul integrity monitoring.",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -46,6 +46,7 @@
   "files": [
     "dist",
     "skills",
+    "openclaw.plugin.json",
     "README.md",
     "LICENSE",
     "CHANGELOG.md"
@@ -61,7 +62,7 @@
     "typecheck": "tsc --noEmit",
     "lint": "tsc --noEmit",
     "prepublishOnly": "pnpm test && pnpm build",
-    "clean": "rm -rf dist",
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
     "prepack": "pnpm clean && pnpm build"
   },
   "keywords": [
@@ -76,7 +77,10 @@
     "cipherclaw",
     "agentic-ai",
     "debugging",
-    "autonomous-agent"
+    "autonomous-agent",
+    "nemoclaw",
+    "sandbox",
+    "openshell"
   ],
   "author": "ClawLI.AI <hello@clawli.ai> (https://clawli.ai)",
   "license": "Apache-2.0",

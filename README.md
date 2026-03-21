@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="docs/assets/cipherclaw-banner.png" alt="CipherClaw — The World's First OpenClaw Bug Hunter AI Agent" width="100%" />
+  <img src="docs/assets/cipherclaw-banner.png" alt="CipherClaw — An OpenClaw Debugging & Observability Skill" width="100%" />
 </p>
 
 <h1 align="center">CipherClaw</h1>
 
 <p align="center">
-  <strong>The World's First OpenClaw Bug Hunter AI Agent</strong><br/>
-  <em>An open-source, AI-powered security agent that hunts down vulnerabilities in your code.</em><br/>
+  <strong>An OpenClaw Debugging & Observability Skill</strong><br/>
+  <em>An open-source, AI-powered debugging toolkit that traces root causes, profiles agent behavior, and predicts failures in multi-agent systems.</em><br/>
   <sub>Originally built for <a href="https://clawli.ai">Clawli AI</a>. Released as open source for the <a href="https://openclaw.ai">OpenClaw Ecosystem</a>.</sub>
 </p>
 
@@ -87,15 +87,20 @@ const session = cc.startSession({ domain: 'agent' });
 cc.ingestTrace({
   id: 'trace-001',
   sessionId: session.id,
+  rootSpanId: 'span-1',
   agentId: 'my-agent',
   domain: 'agent',
   startTime: Date.now() - 5000,
   endTime: Date.now(),
+  durationMs: 5000,
   status: 'error',
+  totalTokens: 0,
+  totalCost: 0,
   spans: [
     {
       id: 'span-1',
       traceId: 'trace-001',
+      parentSpanId: null,
       name: 'agent.plan',
       category: 'planning',
       startTime: Date.now() - 5000,
@@ -104,12 +109,13 @@ cc.ingestTrace({
       status: 'ok',
       agentId: 'my-agent',
       domain: 'agent',
-      metadata: {},
+      attributes: {},
       events: [],
     },
     {
       id: 'span-2',
       traceId: 'trace-001',
+      parentSpanId: 'span-1',
       name: 'agent.tool_call',
       category: 'action',
       startTime: Date.now() - 3000,
@@ -118,8 +124,8 @@ cc.ingestTrace({
       status: 'error',
       agentId: 'my-agent',
       domain: 'agent',
-      metadata: { error: 'Tool timeout' },
-      events: [{ type: 'error', message: 'Tool execution timed out', timestamp: Date.now() }],
+      attributes: { error: 'Tool timeout' },
+      events: [{ name: 'error', timestamp: Date.now(), attributes: { message: 'Tool execution timed out' } }],
     },
   ],
 });
@@ -136,17 +142,17 @@ console.log(graph?.rootCauses.length); // root cause nodes
 
 // Behavioral fingerprint — is this agent acting normal?
 const fp = cc.computeCognitiveFingerprint('my-agent');
-console.log(fp.driftScore); // 0 = stable, higher = drifting
+console.log(fp?.driftScore); // 0 = stable, higher = drifting
 
 // Predict what's about to break
 const predictions = cc.getPredictions();
 predictions.forEach(p => {
-  console.log(`${p.predictedFailure}: ${(p.confidence * 100).toFixed(0)}%`);
+  console.log(`${p.predictedFailureType}: ${(p.confidence * 100).toFixed(0)}%`);
 });
 
 // Full health report
 const report = cc.generateReport();
-console.log(`Health: ${report.healthScore}/100`);
+console.log(`Health: ${report?.healthScore}/100`);
 
 cc.completeSession();
 ```
