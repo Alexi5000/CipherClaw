@@ -26,7 +26,7 @@
   <a href="https://github.com/Alexi5000/CipherClaw/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/Alexi5000/CipherClaw/ci.yml?branch=main&style=flat-square&label=CI" alt="CI" /></a>
   <a href="https://github.com/Alexi5000/CipherClaw/releases"><img src="https://img.shields.io/github/v/release/Alexi5000/CipherClaw?style=flat-square&color=brightgreen&label=release" alt="Release" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue?style=flat-square" alt="License" /></a>
-  <img src="https://img.shields.io/badge/tests-206%20passing-22c55e?style=flat-square" alt="Tests" />
+  <img src="https://img.shields.io/badge/tests-235%20passing-22c55e?style=flat-square" alt="Tests" />
   <img src="https://img.shields.io/badge/TypeScript-strict-3178c6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript Strict" />
   <img src="https://img.shields.io/badge/OpenClaw-compatible-00b894?style=flat-square" alt="OpenClaw" />
   <img src="https://img.shields.io/badge/dependencies-zero-a78bfa?style=flat-square" alt="Zero Dependencies" />
@@ -314,7 +314,7 @@ const cc = createCipherClaw({
 
 ## Tests
 
-206 tests. No mocks. No stubs. Every test runs against the real engine.
+235 tests. No mocks. No stubs. Every test runs against the real engine.
 
 ```bash
 pnpm test
@@ -381,7 +381,7 @@ CipherClaw/
 │       ├── SKILL.md          # OpenClaw skill definition
 │       └── SOUL.md           # Phantom agent soul
 ├── CONTRIBUTING.md
-└── src/__tests__/            # 206 tests
+└── src/__tests__/            # 235 tests
 ```
 
 ---
@@ -394,7 +394,7 @@ Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 git clone https://github.com/Alexi5000/CipherClaw.git
 cd CipherClaw
 pnpm install
-pnpm test        # 206 tests
+pnpm test        # 235 tests
 pnpm typecheck   # strict mode
 pnpm build
 ```
