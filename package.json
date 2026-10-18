@@ -37,10 +37,18 @@
   },
   "typesVersions": {
     "*": {
-      "engine": ["dist/esm/core/engine.d.ts"],
-      "types": ["dist/esm/types/index.d.ts"],
-      "openclaw": ["dist/esm/openclaw/adapter.d.ts"],
-      "manifest": ["dist/esm/openclaw/manifest.d.ts"]
+      "engine": [
+        "dist/esm/core/engine.d.ts"
+      ],
+      "types": [
+        "dist/esm/types/index.d.ts"
+      ],
+      "openclaw": [
+        "dist/esm/openclaw/adapter.d.ts"
+      ],
+      "manifest": [
+        "dist/esm/openclaw/manifest.d.ts"
+      ]
     }
   },
   "files": [
@@ -105,7 +113,9 @@
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
-    "typescript": "^5.4.0",
-    "vitest": "^3.0.0"
+    "esbuild": "^0.28.2",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.4",
+    "vitest": "^4.1.12"
   }
 }

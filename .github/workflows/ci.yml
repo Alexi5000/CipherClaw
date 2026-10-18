@@ -7,11 +7,28 @@ on:
     branches: [main]
 
 jobs:
+  node18-runtime:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: pnpm install --frozen-lockfile && pnpm build
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - run: node --input-type=module -e "await import('./dist/esm/index.js')"
+      - run: node -e "require('./dist/cjs/index.js')"
+
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18, 20, 22]
+        node-version: [20, 22, 24]
 
     steps:
       - uses: actions/checkout@v4
@@ -27,7 +44,7 @@ jobs:
           version: 9
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Type check
         run: pnpm typecheck
