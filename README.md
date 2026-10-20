@@ -418,3 +418,7 @@ Some approaches in this project represent novel work. See [INNOVATIONS.md](docs/
   <sub>Released as open source for the <a href="https://openclaw.ai">OpenClaw Ecosystem</a></sub><br/>
   <sub>CipherClaw — zero-dependency AI agent debugging toolkit</sub>
 </p>
+
+## Security reporting
+
+Read the [security policy](SECURITY.md) before submitting sensitive trace data or reporting a suspected vulnerability. Development and pull-request guidance is in [CONTRIBUTING.md](CONTRIBUTING.md).

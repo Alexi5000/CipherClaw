@@ -10,7 +10,7 @@
 
 If you discover a security vulnerability in CipherClaw, please report it responsibly.
 
-**Do not open a public issue.** Instead, email security concerns to the maintainers through GitHub's private vulnerability reporting feature on this repository.
+**Do not open a public issue.** Use [GitHub private vulnerability reporting](https://github.com/Alexi5000/CipherClaw/security/advisories/new) to send the maintainers a confidential report.
 
 We will acknowledge receipt within 48 hours and provide an estimated timeline for a fix.
 
