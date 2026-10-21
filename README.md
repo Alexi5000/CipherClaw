@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/assets/cipherclaw-banner.jpg" alt="CipherClaw — An OpenClaw Debugging & Observability Skill" width="100%" />
+  <img src="docs/assets/cipherclaw-banner.jpg" alt="CipherClaw: An OpenClaw Debugging & Observability Skill" width="100%" />
 </p>
 
 <h1 align="center">CipherClaw</h1>
@@ -34,13 +34,23 @@
 
 ---
 
-## The Problem
+## Why this exists
+
+**What it does.** CipherClaw is a deterministic debugging engine for multi-agent systems. It ingests traces and spans (including OTLP spans converted by `convertOtlpTrace`), builds a causal graph with weighted root-cause scores, fingerprints each agent's behavior, analyzes memory-tier health, and predicts failures from six pattern recognizers. The analysis path makes no LLM calls and the package has zero runtime dependencies.
+
+**Who it serves.** Operators and developers running OpenClaw-style agent swarms: agents delegating to agents, writing to shared memory, and working across CRM, content, and infrastructure domains, where a flat span list no longer explains what broke.
+
+**Why Alex built it.** Alex Cinovoj, Founder & CTO of TechTide AI, created the repository on 2026-02-16. The history records the motivation directly: the original README called it a bug-hunter agent for OpenClaw with ten capabilities documented in `docs/PATENT.md` (commit `c14594b`, 2026-02-16); the same day commit `b9f782d` ("align with OpenClaw open-source philosophy") renamed that document to `docs/INNOVATIONS.md`, replaced patent language with "capability" terminology, and added the OpenClaw `SKILL.md`, examples, CI, and security policy so the toolkit could be released for the OpenClaw ecosystem. The README has since stated that it was originally built for Clawli AI. Commit `8544ef4` (2026-03-20, v1.1.0) added the OpenTelemetry converter so traces exported from standard tooling can be analyzed without hand-written adapters.
+
+**Real-world use case (2025-2026 evidence).** **Verified in this repository** at the test-suite level: `src/__tests__/otel-converter.test.ts` (29 tests) converts OTLP spans carrying `gen_ai.*` token and cost attributes into CipherClaw traces, and `src/__tests__/e2e-session-lifecycle.test.ts` (65 tests) runs sessions from ingest through root-cause report; CI runs the full 235-test suite on Node 20, 22, and 24 and checks that the built ESM and CJS bundles load on Node 18. Scenario: an OpenClaw operator exports GenAI spans from their agents with OpenTelemetry, the emerging standard for agent observability,[^1] feeds them to CipherClaw, and gets ranked root causes instead of a 400-span timeline. The same toolkit is positioned alongside NVIDIA's NemoClaw security stack for OpenClaw, announced at GTC on 2026-03-16 (see [docs/NEMOCLAW.md](docs/NEMOCLAW.md)).[^2] Node.js 18 is end-of-life and no longer receives security patches; CipherClaw keeps a Node 18 load check in CI for operators still on that line, but new deployments should use Node 20 or later.[^3]
+
+### The problem in practice
 
 You're running a swarm of OpenClaw agents. Something breaks. You open your trace viewer and see 400 spans across 12 agents, 3 domains, and 5 memory tiers. Good luck.
 
 Existing debug tools were built for single-agent chains. They show you a flat list of spans and call it a day. That's fine when you have one agent calling one tool. It falls apart the moment you have agents delegating to agents, writing to shared memory, and operating across CRM, content, and infrastructure domains simultaneously.
 
-CipherClaw was built for this world. It's an autonomous debug agent that joins your OpenClaw system as a peer, communicates through the event bus, respects agent hierarchy, and does the actual debugging work — not just the observability part.
+CipherClaw was built for this world. It's an autonomous debug agent that joins your OpenClaw system as a peer, communicates through the event bus, respects agent hierarchy, and does the actual debugging work, not just the observability part.
 
 ## What It Does
 
@@ -67,11 +77,16 @@ For the full technical deep-dive, see [ARCHITECTURE.md](docs/ARCHITECTURE.md). F
 
 ### Install
 
+The package is not yet published to the npm registry (checked 2026-10-20). Install from the repository:
+
 ```bash
-npm install cipherclaw
-# or
-pnpm add cipherclaw
+git clone https://github.com/Alexi5000/CipherClaw.git
+cd CipherClaw
+pnpm install --frozen-lockfile
+pnpm build       # emits dist/esm and dist/cjs
 ```
+
+Then import from the built `dist/` output, or add the repository as a git dependency in your own project (`npm install github:Alexi5000/CipherClaw`), which runs the `prepare` build on install.
 
 ### Use
 
@@ -136,11 +151,11 @@ console.log(error.module);       // 'action'
 console.log(error.severity);     // 'high'
 console.log(error.suggestedFix); // 'Increase tool timeout or add retry logic'
 
-// Get the causal graph — who caused what
+// Get the causal graph: who caused what
 const graph = cc.getCausalGraph();
 console.log(graph?.rootCauses.length); // root cause nodes
 
-// Behavioral fingerprint — is this agent acting normal?
+// Behavioral fingerprint: is this agent acting normal?
 const fp = cc.computeCognitiveFingerprint('my-agent');
 console.log(fp?.driftScore); // 0 = stable, higher = drifting
 
@@ -161,7 +176,7 @@ cc.completeSession();
 
 ## OpenClaw Skill
 
-CipherClaw is a standard OpenClaw skill. Drop it into your `~/.openclaw/skills/` directory or install via ClawHub.
+CipherClaw is a standard OpenClaw skill. Drop the `skills/cipherclaw/` directory into your `~/.openclaw/skills/` directory.
 
 ### SKILL.md
 
@@ -201,10 +216,10 @@ When running inside an OpenClaw system, CipherClaw operates as an orchestrator-l
 Your Sovereign Agent
 ├── Your Other Orchestrators
 └── Phantom (CipherClaw Debug Orchestrator)
-    ├── Trace Analyst — ingests and correlates traces
-    ├── Error Classifier — categorizes and scores errors
-    ├── Cognitive Profiler — fingerprints agent behavior
-    └── Flow Tester — synthesizes and runs integration tests
+    ├── Trace Analyst: ingests and correlates traces
+    ├── Error Classifier: categorizes and scores errors
+    ├── Cognitive Profiler: fingerprints agent behavior
+    └── Flow Tester: synthesizes and runs integration tests
 ```
 
 <p align="center">
@@ -322,9 +337,10 @@ pnpm test
 
 | Suite | Count | What It Covers |
 |-------|-------|---------------|
-| Unit — Core Capabilities | 66 | All 10 capabilities with edge cases |
-| End-to-End — Sessions | 65 | Full lifecycle across all domains |
-| Smoke — API Surface | 75 | Every public method and event |
+| Unit: Core Capabilities | 66 | All 10 capabilities with edge cases |
+| End-to-End: Sessions | 65 | Full lifecycle across all domains |
+| Smoke: API Surface | 75 | Every public method and event |
+| OpenTelemetry Converter | 29 | OTLP span and trace conversion, gen_ai token and cost attributes |
 
 ---
 
@@ -386,9 +402,15 @@ CipherClaw/
 
 ---
 
+## Security
+
+Read the [security policy](SECURITY.md) before submitting sensitive trace data or reporting a suspected vulnerability. Private vulnerability reporting is enabled on the repository.
+
+As of 2026-10-21 the repository has 0 open Dependabot alerts and 0 open secret-scanning alerts. CodeQL default setup scans pushes and pull requests. One medium-severity CodeQL finding is open and deliberately not dismissed: `js/unsafe-code-construction` in `src/core/breakpoints.ts`, because the `conditional` breakpoint type evaluates a caller-supplied JavaScript expression with `new Function` by design. Treat breakpoint conditions as trusted code and never build them from end-user input. CI runs typecheck, tests, and build on every pull request (`.github/workflows/ci.yml`) with the `GITHUB_TOKEN` limited to `contents: read` and the third-party `pnpm/action-setup` action pinned to a commit SHA.
+
 ## Contributing
 
-Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for development and pull-request guidance.
 
 ```bash
 git clone https://github.com/Alexi5000/CipherClaw.git
@@ -416,9 +438,9 @@ Some approaches in this project represent novel work. See [INNOVATIONS.md](docs/
 <p align="center">
   <strong>Built by <a href="https://clawli.ai">Clawli AI</a></strong><br/>
   <sub>Released as open source for the <a href="https://openclaw.ai">OpenClaw Ecosystem</a></sub><br/>
-  <sub>CipherClaw — zero-dependency AI agent debugging toolkit</sub>
+  <sub>CipherClaw: zero-dependency AI agent debugging toolkit</sub>
 </p>
 
-## Security reporting
-
-Read the [security policy](SECURITY.md) before submitting sensitive trace data or reporting a suspected vulnerability. Development and pull-request guidance is in [CONTRIBUTING.md](CONTRIBUTING.md).
+[^1]: OpenTelemetry, "AI Agent Observability - Evolving Standards and Best Practices", https://opentelemetry.io/blog/2025/ai-agent-observability/, published 2025-03-06.
+[^2]: NVIDIA Newsroom, "NVIDIA Announces NemoClaw for the OpenClaw Community", https://nvidianews.nvidia.com/news/nvidia-announces-nemoclaw, published 2026-03-16.
+[^3]: Node.js, "Beware of End-of-Life Node.js Versions - Upgrade or Seek Post-EOL Support", https://nodejs.org/en/blog/announcements/node-18-eol-support, published 2025-06-06.
