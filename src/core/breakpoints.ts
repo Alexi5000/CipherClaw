@@ -7,6 +7,7 @@ import type {
   DebugSession, Breakpoint, BreakpointType, Span, StateSnapshot,
 } from '../types/index.js';
 import { uid } from './utils.js';
+import { evaluateCondition } from './condition.js';
 
 /** Add a breakpoint to a session. */
 export function addBreakpoint(
@@ -83,10 +84,7 @@ export function checkBreakpoints(
         break;
       case 'conditional':
         if (bp.condition) {
-          try {
-            const fn = new Function('span', 'session', `return ${bp.condition}`);
-            hit = !!fn(span, session);
-          } catch { hit = false; }
+          hit = evaluateCondition(bp.condition, span, session);
         }
         break;
     }

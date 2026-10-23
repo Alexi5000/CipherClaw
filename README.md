@@ -311,6 +311,27 @@ const cc = createCipherClaw({
 
 11 breakpoint types: `on_error`, `on_tool_call`, `on_iteration`, `on_span_category`, `on_agent`, `on_memory_op`, `on_cost_threshold`, `on_token_threshold`, `on_latency`, `on_pipeline_stage`, `conditional`.
 
+Conditional breakpoints use a bounded expression language, for example
+`span.status === "error" && span.durationMs >= 1000`. Supported syntax:
+
+- Roots: `span`, `session`; own data properties through `.name`, `["name"]`, or `[0]`.
+- Literals: single/double quoted strings, finite decimal numbers (including negative/exponent notation), `true`, `false`, `null`, `undefined`.
+- Operators: `!`, `<`, `<=`, `>`, `>=`, `==`, `!=`, `===`, `!==`, `&&`, `||`, `??`, and parentheses. Precedence from highest to lowest is `!`, relational comparisons, equality, `&&`, `||`, `??`. Logical operators short-circuit after the entire expression is parsed.
+- Strings accept escaped quotes, backslash, newline, carriage return and tab. Comparisons accept primitive values only; objects are never coerced through user methods.
+
+Conditions cannot execute JavaScript. Calls, assignments, globals, computed property
+expressions, prototype access, getters, optional chaining, arithmetic, and template
+strings are unsupported. Conditions that are malformed, unsupported, or access a
+missing parent evaluate to false (no snapshot). Limits are 4096 characters, 256
+tokens, 32 nested expression levels, and 32 property accesses per path.
+
+**Migration:** earlier versions executed arbitrary JavaScript conditions. Rewrite
+function calls and other unsupported expressions using the grammar above. Trace and
+session objects must remain ordinary application-owned data, not hostile JavaScript
+Proxy objects; the expression interpreter is not an isolation boundary for executable
+objects supplied by code in the same process.
+
+
 ### Events
 
 | Event | When |
@@ -406,7 +427,7 @@ CipherClaw/
 
 Read the [security policy](SECURITY.md) before submitting sensitive trace data or reporting a suspected vulnerability. Private vulnerability reporting is enabled on the repository.
 
-As of 2026-10-21 the repository has 0 open Dependabot alerts and 0 open secret-scanning alerts. CodeQL default setup scans pushes and pull requests. One medium-severity CodeQL finding is open and deliberately not dismissed: `js/unsafe-code-construction` in `src/core/breakpoints.ts`, because the `conditional` breakpoint type evaluates a caller-supplied JavaScript expression with `new Function` by design. Treat breakpoint conditions as trusted code and never build them from end-user input. CI runs typecheck, tests, and build on every pull request (`.github/workflows/ci.yml`) with the `GITHUB_TOKEN` limited to `contents: read` and the third-party `pnpm/action-setup` action pinned to a commit SHA.
+Conditional breakpoints now use a bounded expression interpreter rather than executing caller-supplied JavaScript. The regression suite exercises code-injection rejection through engine ingestion and preserves ordinary comparisons and snapshots. CodeQL must rescan the merged change before its finding can be counted closed. CI runs typecheck, tests, and build on every pull request (`.github/workflows/ci.yml`) with the `GITHUB_TOKEN` limited to `contents: read` and the third-party `pnpm/action-setup` action pinned to a commit SHA.
 
 ## Contributing
 
