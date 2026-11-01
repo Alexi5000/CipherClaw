@@ -17,17 +17,9 @@ import {
 console.log('CipherClaw OpenClaw Manifest:');
 console.log(`  Name: ${CIPHERCLAW_MANIFEST.name}`);
 console.log(`  Version: ${CIPHERCLAW_MANIFEST.version}`);
-console.log(`  Agents: ${CIPHERCLAW_MANIFEST.agents.length}`);
 console.log(`  Skills: ${CIPHERCLAW_MANIFEST.skills.length}`);
 console.log(`  Tools: ${CIPHERCLAW_MANIFEST.tools.length}`);
 console.log(`  Events: ${CIPHERCLAW_MANIFEST.events.length}`);
-console.log();
-
-// List agents
-console.log('Agents:');
-CIPHERCLAW_MANIFEST.agents.forEach((a) => {
-  console.log(`  ${a.id} (${a.tier}) — ${a.description}`);
-});
 console.log();
 
 // List skills
@@ -87,30 +79,34 @@ const now = Date.now();
 cc.ingestTrace({
   id: 'trace-001',
   sessionId: session.id,
+  rootSpanId: 's1',
   agentId: 'sovereign-veronica',
   domain: 'agent',
   startTime: now - 10000,
   endTime: now,
+  durationMs: 10000,
   status: 'error',
+  totalTokens: 0,
+  totalCost: 0,
   spans: [
     {
-      id: 's1', traceId: 'trace-001', name: 'veronica.dispatch',
+      id: 's1', traceId: 'trace-001', parentSpanId: null, name: 'veronica.dispatch',
       category: 'planning', startTime: now - 10000, endTime: now - 9000,
       durationMs: 1000, status: 'ok', agentId: 'sovereign-veronica',
-      domain: 'agent', metadata: {}, events: [],
+      domain: 'agent', attributes: {}, events: [],
     },
     {
-      id: 's2', traceId: 'trace-001', name: 'rose.execute_plan',
+      id: 's2', traceId: 'trace-001', parentSpanId: 's1', name: 'rose.execute_plan',
       category: 'action', startTime: now - 9000, endTime: now - 5000,
       durationMs: 4000, status: 'ok', agentId: 'orchestrator-rose',
-      domain: 'agent', metadata: {}, events: [],
+      domain: 'agent', attributes: {}, events: [],
     },
     {
-      id: 's3', traceId: 'trace-001', name: 'worker.tool_call',
+      id: 's3', traceId: 'trace-001', parentSpanId: 's2', name: 'worker.tool_call',
       category: 'action', startTime: now - 5000, endTime: now,
       durationMs: 5000, status: 'error', agentId: 'worker-alpha',
-      domain: 'agent', metadata: { error: 'Connection refused' },
-      events: [{ type: 'error', message: 'Connection refused to external API', timestamp: now }],
+      domain: 'agent', attributes: { error: 'Connection refused' },
+      events: [{ name: 'error', timestamp: now, attributes: { message: 'Connection refused to external API' } }],
     },
   ],
 });
@@ -119,28 +115,33 @@ cc.ingestTrace({
 
 // Escalate the error from worker up to sovereign
 const escalation = cc.propagateDebugEvent({
-  source: 'worker-alpha',
-  target: 'sovereign-veronica',
+  id: 'hier-001',
+  timestamp: Date.now(),
+  sourceAgentId: 'worker-alpha',
+  sourceLevel: 3,
+  targetAgentId: 'sovereign-veronica',
+  targetLevel: 0,
   direction: 'up',
   eventType: 'error_escalation',
   payload: { error: 'Connection refused to external API', severity: 'high' },
-  timestamp: Date.now(),
-  path: [],
+  propagationPath: ['worker-alpha', 'orchestrator-rose', 'sovereign-veronica'],
 });
 
 console.log('\nHierarchy Propagation:');
 console.log(`  Direction: ${escalation.direction}`);
-console.log(`  Path: ${escalation.path.join(' → ')}`);
+console.log(`  Path: ${escalation.propagationPath.join(' → ')}`);
 console.log();
 
 // ─── 5. Generate report ─────────────────────────────────────────────────────
 
 const report = cc.generateReport();
-console.log('Debug Report:');
-console.log(`  Health: ${report.healthScore}/100`);
-console.log(`  Errors: ${report.errorBreakdown.total}`);
-console.log(`  Recommendations: ${report.recommendations.length}`);
-console.log();
+if (report) {
+  console.log('Debug Report:');
+  console.log(`  Health: ${report.healthScore}/100`);
+  console.log(`  Summary: ${report.summary}`);
+  console.log(`  Recommendations: ${report.recommendations.length}`);
+  console.log();
+}
 
 // ─── 6. Clean up ────────────────────────────────────────────────────────────
 
