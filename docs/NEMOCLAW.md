@@ -126,11 +126,10 @@ console.log(`Health score: ${report?.healthScore}/100`);
 If your agents export traces via Opik or standard OTLP, use the built-in converter:
 
 ```typescript
-import { convertOtlpTrace } from 'cipherclaw/engine';
-import { createCipherClaw } from 'cipherclaw';
+import { convertOtlpTrace, createCipherClaw } from 'cipherclaw';
 
 const cc = createCipherClaw();
-cc.startSession({ domain: 'agent' });
+const session = cc.startSession({ domain: 'agent' });
 
 // Convert OTLP spans to CipherClaw format
 const ccTrace = convertOtlpTrace(otlpSpans, session.id);

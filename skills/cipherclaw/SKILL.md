@@ -56,7 +56,7 @@ cc.ingestSpan(span);         // Individual span
 Or convert OpenTelemetry traces first:
 
 ```typescript
-import { convertOtlpSpan, convertOtlpTrace } from 'cipherclaw/engine';
+import { convertOtlpSpan, convertOtlpTrace } from 'cipherclaw';
 
 const ccTrace = convertOtlpTrace(otlpSpans);
 cc.ingestTrace(ccTrace);
