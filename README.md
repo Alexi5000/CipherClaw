@@ -195,7 +195,6 @@ import { CIPHERCLAW_MANIFEST, createCipherClaw } from 'cipherclaw';
 
 // The manifest describes CipherClaw to any OpenClaw gateway
 console.log(CIPHERCLAW_MANIFEST.name);    // 'cipherclaw'
-console.log(CIPHERCLAW_MANIFEST.agents);  // 5 agents
 console.log(CIPHERCLAW_MANIFEST.skills);  // 10 skills
 console.log(CIPHERCLAW_MANIFEST.tools);   // 14 tools
 console.log(CIPHERCLAW_MANIFEST.events);  // 12 events

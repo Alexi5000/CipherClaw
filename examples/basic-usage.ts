@@ -11,11 +11,8 @@
  * Run with: npx tsx examples/basic-usage.ts
  */
 
-import {
-  createCipherClaw,
-  type DebugTrace,
-  type DebugSpan,
-} from '../src/index';
+import { createCipherClaw } from '../src/index';
+import type { Trace } from '../src/types/index';
 
 // ─── 1. Create a CipherClaw instance ────────────────────────────────────────
 
@@ -38,7 +35,7 @@ cc.on('anomaly-detected', (event) => {
 });
 
 cc.on('prediction-generated', (event) => {
-  console.log(`[EVENT] Prediction: ${event.payload.predictedFailure} (${(event.payload.confidence * 100).toFixed(0)}%)`);
+  console.log(`[EVENT] Prediction: ${String(event.payload.predictedFailureType)} (${(Number(event.payload.confidence) * 100).toFixed(0)}%)`);
 });
 
 // ─── 3. Start a debug session ───────────────────────────────────────────────
@@ -51,18 +48,23 @@ console.log(`\nSession started: ${session.id}\n`);
 const now = Date.now();
 
 // A successful planning trace
-const planTrace: DebugTrace = {
+const planTrace: Trace = {
   id: 'trace-plan-001',
   sessionId: session.id,
   agentId: 'orchestrator-rose',
   domain: 'agent',
+  rootSpanId: 'span-plan-1',
   startTime: now - 10000,
   endTime: now - 8000,
+  durationMs: 2000,
   status: 'ok',
+  totalTokens: 0,
+  totalCost: 0,
   spans: [
     {
       id: 'span-plan-1',
       traceId: 'trace-plan-001',
+      parentSpanId: null,
       name: 'rose.receive_task',
       category: 'planning',
       startTime: now - 10000,
@@ -71,12 +73,13 @@ const planTrace: DebugTrace = {
       status: 'ok',
       agentId: 'orchestrator-rose',
       domain: 'agent',
-      metadata: { task: 'Generate weekly report' },
+      attributes: { task: 'Generate weekly report' },
       events: [],
     },
     {
       id: 'span-plan-2',
       traceId: 'trace-plan-001',
+      parentSpanId: 'span-plan-1',
       name: 'rose.create_plan',
       category: 'planning',
       startTime: now - 9500,
@@ -85,12 +88,13 @@ const planTrace: DebugTrace = {
       status: 'ok',
       agentId: 'orchestrator-rose',
       domain: 'agent',
-      metadata: { steps: 4 },
+      attributes: { steps: 4 },
       events: [],
     },
     {
       id: 'span-plan-3',
       traceId: 'trace-plan-001',
+      parentSpanId: 'span-plan-1',
       name: 'rose.delegate_to_worker',
       category: 'action',
       startTime: now - 8500,
@@ -99,25 +103,30 @@ const planTrace: DebugTrace = {
       status: 'ok',
       agentId: 'orchestrator-rose',
       domain: 'agent',
-      metadata: { delegateTo: 'content-writer' },
+      attributes: { delegateTo: 'content-writer' },
       events: [],
     },
   ],
 };
 
 // A failing tool call trace
-const errorTrace: DebugTrace = {
+const errorTrace: Trace = {
   id: 'trace-error-001',
   sessionId: session.id,
   agentId: 'content-writer',
   domain: 'content',
+  rootSpanId: 'span-err-1',
   startTime: now - 7000,
   endTime: now - 4000,
+  durationMs: 3000,
   status: 'error',
+  totalTokens: 0,
+  totalCost: 0,
   spans: [
     {
       id: 'span-err-1',
       traceId: 'trace-error-001',
+      parentSpanId: null,
       name: 'writer.fetch_data',
       category: 'action',
       startTime: now - 7000,
@@ -126,12 +135,13 @@ const errorTrace: DebugTrace = {
       status: 'ok',
       agentId: 'content-writer',
       domain: 'content',
-      metadata: {},
+      attributes: {},
       events: [],
     },
     {
       id: 'span-err-2',
       traceId: 'trace-error-001',
+      parentSpanId: 'span-err-1',
       name: 'writer.call_llm',
       category: 'action',
       startTime: now - 5000,
@@ -140,9 +150,9 @@ const errorTrace: DebugTrace = {
       status: 'error',
       agentId: 'content-writer',
       domain: 'content',
-      metadata: { error: 'Rate limit exceeded' },
+      attributes: { error: 'Rate limit exceeded' },
       events: [
-        { type: 'error', message: 'Rate limit exceeded on OpenAI API', timestamp: now - 4000 },
+        { name: 'error', timestamp: now - 4000, attributes: { message: 'Rate limit exceeded on OpenAI API' } },
       ],
     },
   ],
@@ -161,7 +171,7 @@ const classified = cc.classifyError('Rate limit exceeded on OpenAI API');
 console.log('Error Classification:');
 console.log(`  Module: ${classified.module}`);
 console.log(`  Severity: ${classified.severity}`);
-console.log(`  Recoverable: ${classified.recoverable}`);
+console.log(`  Recoverability: ${classified.recoverability}`);
 console.log(`  Suggested Fix: ${classified.suggestedFix}\n`);
 
 // Get the causal graph
@@ -171,37 +181,42 @@ if (graph) {
   console.log(`  Nodes: ${graph.nodes.length}`);
   console.log(`  Edges: ${graph.edges.length}`);
   console.log(`  Root Causes: ${graph.rootCauses.length}`);
-  graph.rootCauses.forEach((rc) => {
-    console.log(`    → ${rc.span.name} (probability: ${(rc.rootCauseProbability * 100).toFixed(0)}%)`);
+  // graph.rootCauses holds node ids; resolve them to nodes via getRootCauses().
+  cc.getRootCauses().forEach((rc) => {
+    console.log(`    → ${rc.operation} (probability: ${(rc.rootCauseProbability * 100).toFixed(0)}%)`);
   });
   console.log();
 }
 
 // Cognitive fingerprint
 const fp = cc.computeCognitiveFingerprint('orchestrator-rose');
-console.log('Cognitive Fingerprint (orchestrator-rose):');
-console.log(`  Drift Score: ${fp.driftScore.toFixed(1)}`);
-console.log(`  Drift Direction: ${fp.driftDirection}\n`);
+if (fp) {
+  console.log('Cognitive Fingerprint (orchestrator-rose):');
+  console.log(`  Drift Score: ${fp.driftScore.toFixed(1)}`);
+  console.log(`  Drift Direction: ${fp.driftDirection}\n`);
+}
 
 // Predictions
 const predictions = cc.getPredictions();
 console.log(`Predictions: ${predictions.length}`);
 predictions.forEach((p) => {
-  console.log(`  → ${p.predictedFailure} (${(p.confidence * 100).toFixed(0)}% confidence)`);
+  console.log(`  → ${p.predictedFailureType} (${(p.confidence * 100).toFixed(0)}% confidence)`);
 });
 console.log();
 
 // ─── 6. Generate Report ─────────────────────────────────────────────────────
 
 const report = cc.generateReport();
-console.log('Veronica Debug Report:');
-console.log(`  Health Score: ${report.healthScore}/100`);
-console.log(`  Total Errors: ${report.errorBreakdown.total}`);
-console.log(`  Recommendations: ${report.recommendations.length}`);
-report.recommendations.forEach((r) => {
-  console.log(`    → ${r}`);
-});
-console.log();
+if (report) {
+  console.log('Veronica Debug Report:');
+  console.log(`  Health Score: ${report.healthScore}/100`);
+  console.log(`  Top Issues: ${report.topIssues.length}`);
+  console.log(`  Recommendations: ${report.recommendations.length}`);
+  report.recommendations.forEach((r) => {
+    console.log(`    → ${r}`);
+  });
+  console.log();
+}
 
 // ─── 7. Self-Debug ──────────────────────────────────────────────────────────
 
@@ -214,5 +229,7 @@ console.log(`  Actions Taken: ${selfCheck.actions.length}\n`);
 // ─── 8. Complete Session ────────────────────────────────────────────────────
 
 const completed = cc.completeSession();
-console.log(`Session completed: ${completed.status}`);
-console.log(`Duration: ${completed.endTime! - completed.startTime}ms`);
+if (completed) {
+  console.log(`Session completed: ${completed.status}`);
+  console.log(`Duration: ${(completed.endedAt ?? Date.now()) - completed.startedAt}ms`);
+}
